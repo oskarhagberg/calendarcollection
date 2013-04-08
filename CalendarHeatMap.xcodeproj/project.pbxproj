@@ -1,0 +1,483 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		75AAEE8A1713583E00176CC7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEE891713583E00176CC7 /* UIKit.framework */; };
+		75AAEE8C1713583E00176CC7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEE8B1713583E00176CC7 /* Foundation.framework */; };
+		75AAEE8E1713583E00176CC7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEE8D1713583E00176CC7 /* CoreGraphics.framework */; };
+		75AAEE941713583E00176CC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEE921713583E00176CC7 /* InfoPlist.strings */; };
+		75AAEE961713583E00176CC7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEE951713583E00176CC7 /* main.m */; };
+		75AAEE9A1713583E00176CC7 /* OHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEE991713583E00176CC7 /* OHAppDelegate.m */; };
+		75AAEE9C1713583E00176CC7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEE9B1713583E00176CC7 /* Default.png */; };
+		75AAEE9E1713583E00176CC7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEE9D1713583E00176CC7 /* Default@2x.png */; };
+		75AAEEA01713583E00176CC7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEE9F1713583E00176CC7 /* Default-568h@2x.png */; };
+		75AAEEA31713583E00176CC7 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEEA11713583E00176CC7 /* MainStoryboard_iPhone.storyboard */; };
+		75AAEEA61713583E00176CC7 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEEA41713583E00176CC7 /* MainStoryboard_iPad.storyboard */; };
+		75AAEEA91713583E00176CC7 /* OHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEEA81713583E00176CC7 /* OHViewController.m */; };
+		75AAEEB11713583E00176CC7 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEEB01713583E00176CC7 /* SenTestingKit.framework */; };
+		75AAEEB21713583E00176CC7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEE891713583E00176CC7 /* UIKit.framework */; };
+		75AAEEB31713583E00176CC7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEE8B1713583E00176CC7 /* Foundation.framework */; };
+		75AAEEBB1713583E00176CC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEEB91713583E00176CC7 /* InfoPlist.strings */; };
+		75AAEEBE1713583E00176CC7 /* CalendarHeatMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEEBD1713583E00176CC7 /* CalendarHeatMapTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		75AAEEB41713583E00176CC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75AAEE7E1713583E00176CC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75AAEE851713583E00176CC7;
+			remoteInfo = CalendarHeatMap;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		75AAEE861713583E00176CC7 /* CalendarHeatMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarHeatMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		75AAEE891713583E00176CC7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		75AAEE8B1713583E00176CC7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		75AAEE8D1713583E00176CC7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		75AAEE911713583E00176CC7 /* CalendarHeatMap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CalendarHeatMap-Info.plist"; sourceTree = "<group>"; };
+		75AAEE931713583E00176CC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		75AAEE951713583E00176CC7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		75AAEE971713583E00176CC7 /* CalendarHeatMap-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarHeatMap-Prefix.pch"; sourceTree = "<group>"; };
+		75AAEE981713583E00176CC7 /* OHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OHAppDelegate.h; sourceTree = "<group>"; };
+		75AAEE991713583E00176CC7 /* OHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OHAppDelegate.m; sourceTree = "<group>"; };
+		75AAEE9B1713583E00176CC7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		75AAEE9D1713583E00176CC7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		75AAEE9F1713583E00176CC7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		75AAEEA21713583E00176CC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		75AAEEA51713583E00176CC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		75AAEEA71713583E00176CC7 /* OHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OHViewController.h; sourceTree = "<group>"; };
+		75AAEEA81713583E00176CC7 /* OHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OHViewController.m; sourceTree = "<group>"; };
+		75AAEEAF1713583E00176CC7 /* CalendarHeatMapTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalendarHeatMapTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		75AAEEB01713583E00176CC7 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		75AAEEB81713583E00176CC7 /* CalendarHeatMapTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CalendarHeatMapTests-Info.plist"; sourceTree = "<group>"; };
+		75AAEEBA1713583E00176CC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		75AAEEBC1713583E00176CC7 /* CalendarHeatMapTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarHeatMapTests.h; sourceTree = "<group>"; };
+		75AAEEBD1713583E00176CC7 /* CalendarHeatMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarHeatMapTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		75AAEE831713583E00176CC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75AAEE8A1713583E00176CC7 /* UIKit.framework in Frameworks */,
+				75AAEE8C1713583E00176CC7 /* Foundation.framework in Frameworks */,
+				75AAEE8E1713583E00176CC7 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75AAEEAB1713583E00176CC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75AAEEB11713583E00176CC7 /* SenTestingKit.framework in Frameworks */,
+				75AAEEB21713583E00176CC7 /* UIKit.framework in Frameworks */,
+				75AAEEB31713583E00176CC7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		75AAEE7D1713583E00176CC7 = {
+			isa = PBXGroup;
+			children = (
+				75AAEE8F1713583E00176CC7 /* CalendarHeatMap */,
+				75AAEEB61713583E00176CC7 /* CalendarHeatMapTests */,
+				75AAEE881713583E00176CC7 /* Frameworks */,
+				75AAEE871713583E00176CC7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		75AAEE871713583E00176CC7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				75AAEE861713583E00176CC7 /* CalendarHeatMap.app */,
+				75AAEEAF1713583E00176CC7 /* CalendarHeatMapTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		75AAEE881713583E00176CC7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75AAEE891713583E00176CC7 /* UIKit.framework */,
+				75AAEE8B1713583E00176CC7 /* Foundation.framework */,
+				75AAEE8D1713583E00176CC7 /* CoreGraphics.framework */,
+				75AAEEB01713583E00176CC7 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		75AAEE8F1713583E00176CC7 /* CalendarHeatMap */ = {
+			isa = PBXGroup;
+			children = (
+				75AAEE981713583E00176CC7 /* OHAppDelegate.h */,
+				75AAEE991713583E00176CC7 /* OHAppDelegate.m */,
+				75AAEEA11713583E00176CC7 /* MainStoryboard_iPhone.storyboard */,
+				75AAEEA41713583E00176CC7 /* MainStoryboard_iPad.storyboard */,
+				75AAEEA71713583E00176CC7 /* OHViewController.h */,
+				75AAEEA81713583E00176CC7 /* OHViewController.m */,
+				75AAEE901713583E00176CC7 /* Supporting Files */,
+			);
+			path = CalendarHeatMap;
+			sourceTree = "<group>";
+		};
+		75AAEE901713583E00176CC7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				75AAEE911713583E00176CC7 /* CalendarHeatMap-Info.plist */,
+				75AAEE921713583E00176CC7 /* InfoPlist.strings */,
+				75AAEE951713583E00176CC7 /* main.m */,
+				75AAEE971713583E00176CC7 /* CalendarHeatMap-Prefix.pch */,
+				75AAEE9B1713583E00176CC7 /* Default.png */,
+				75AAEE9D1713583E00176CC7 /* Default@2x.png */,
+				75AAEE9F1713583E00176CC7 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		75AAEEB61713583E00176CC7 /* CalendarHeatMapTests */ = {
+			isa = PBXGroup;
+			children = (
+				75AAEEBC1713583E00176CC7 /* CalendarHeatMapTests.h */,
+				75AAEEBD1713583E00176CC7 /* CalendarHeatMapTests.m */,
+				75AAEEB71713583E00176CC7 /* Supporting Files */,
+			);
+			path = CalendarHeatMapTests;
+			sourceTree = "<group>";
+		};
+		75AAEEB71713583E00176CC7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				75AAEEB81713583E00176CC7 /* CalendarHeatMapTests-Info.plist */,
+				75AAEEB91713583E00176CC7 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		75AAEE851713583E00176CC7 /* CalendarHeatMap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75AAEEC11713583E00176CC7 /* Build configuration list for PBXNativeTarget "CalendarHeatMap" */;
+			buildPhases = (
+				75AAEE821713583E00176CC7 /* Sources */,
+				75AAEE831713583E00176CC7 /* Frameworks */,
+				75AAEE841713583E00176CC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CalendarHeatMap;
+			productName = CalendarHeatMap;
+			productReference = 75AAEE861713583E00176CC7 /* CalendarHeatMap.app */;
+			productType = "com.apple.product-type.application";
+		};
+		75AAEEAE1713583E00176CC7 /* CalendarHeatMapTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75AAEEC41713583E00176CC7 /* Build configuration list for PBXNativeTarget "CalendarHeatMapTests" */;
+			buildPhases = (
+				75AAEEAA1713583E00176CC7 /* Sources */,
+				75AAEEAB1713583E00176CC7 /* Frameworks */,
+				75AAEEAC1713583E00176CC7 /* Resources */,
+				75AAEEAD1713583E00176CC7 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				75AAEEB51713583E00176CC7 /* PBXTargetDependency */,
+			);
+			name = CalendarHeatMapTests;
+			productName = CalendarHeatMapTests;
+			productReference = 75AAEEAF1713583E00176CC7 /* CalendarHeatMapTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		75AAEE7E1713583E00176CC7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = OH;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Oskar Hagberg";
+			};
+			buildConfigurationList = 75AAEE811713583E00176CC7 /* Build configuration list for PBXProject "CalendarHeatMap" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 75AAEE7D1713583E00176CC7;
+			productRefGroup = 75AAEE871713583E00176CC7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				75AAEE851713583E00176CC7 /* CalendarHeatMap */,
+				75AAEEAE1713583E00176CC7 /* CalendarHeatMapTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		75AAEE841713583E00176CC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75AAEE941713583E00176CC7 /* InfoPlist.strings in Resources */,
+				75AAEE9C1713583E00176CC7 /* Default.png in Resources */,
+				75AAEE9E1713583E00176CC7 /* Default@2x.png in Resources */,
+				75AAEEA01713583E00176CC7 /* Default-568h@2x.png in Resources */,
+				75AAEEA31713583E00176CC7 /* MainStoryboard_iPhone.storyboard in Resources */,
+				75AAEEA61713583E00176CC7 /* MainStoryboard_iPad.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75AAEEAC1713583E00176CC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75AAEEBB1713583E00176CC7 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		75AAEEAD1713583E00176CC7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		75AAEE821713583E00176CC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75AAEE961713583E00176CC7 /* main.m in Sources */,
+				75AAEE9A1713583E00176CC7 /* OHAppDelegate.m in Sources */,
+				75AAEEA91713583E00176CC7 /* OHViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75AAEEAA1713583E00176CC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75AAEEBE1713583E00176CC7 /* CalendarHeatMapTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		75AAEEB51713583E00176CC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 75AAEE851713583E00176CC7 /* CalendarHeatMap */;
+			targetProxy = 75AAEEB41713583E00176CC7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		75AAEE921713583E00176CC7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				75AAEE931713583E00176CC7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		75AAEEA11713583E00176CC7 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				75AAEEA21713583E00176CC7 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		75AAEEA41713583E00176CC7 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				75AAEEA51713583E00176CC7 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		75AAEEB91713583E00176CC7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				75AAEEBA1713583E00176CC7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		75AAEEBF1713583E00176CC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		75AAEEC01713583E00176CC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		75AAEEC21713583E00176CC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CalendarHeatMap/CalendarHeatMap-Prefix.pch";
+				INFOPLIST_FILE = "CalendarHeatMap/CalendarHeatMap-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		75AAEEC31713583E00176CC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CalendarHeatMap/CalendarHeatMap-Prefix.pch";
+				INFOPLIST_FILE = "CalendarHeatMap/CalendarHeatMap-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		75AAEEC51713583E00176CC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CalendarHeatMap.app/CalendarHeatMap";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CalendarHeatMap/CalendarHeatMap-Prefix.pch";
+				INFOPLIST_FILE = "CalendarHeatMapTests/CalendarHeatMapTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		75AAEEC61713583E00176CC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CalendarHeatMap.app/CalendarHeatMap";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CalendarHeatMap/CalendarHeatMap-Prefix.pch";
+				INFOPLIST_FILE = "CalendarHeatMapTests/CalendarHeatMapTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		75AAEE811713583E00176CC7 /* Build configuration list for PBXProject "CalendarHeatMap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75AAEEBF1713583E00176CC7 /* Debug */,
+				75AAEEC01713583E00176CC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		75AAEEC11713583E00176CC7 /* Build configuration list for PBXNativeTarget "CalendarHeatMap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75AAEEC21713583E00176CC7 /* Debug */,
+				75AAEEC31713583E00176CC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		75AAEEC41713583E00176CC7 /* Build configuration list for PBXNativeTarget "CalendarHeatMapTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75AAEEC51713583E00176CC7 /* Debug */,
+				75AAEEC61713583E00176CC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 75AAEE7E1713583E00176CC7 /* Project object */;
+}
