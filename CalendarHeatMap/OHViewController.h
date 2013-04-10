@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OHCalendarHeatMapView.h"
 
 @interface OHViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet OHCalendarHeatMapView *calendarHeatMap;
 @end

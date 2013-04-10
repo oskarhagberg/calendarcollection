@@ -8,6 +8,7 @@
 
 #import "OHViewController.h"
 
+
 @interface OHViewController ()
 
 @end
@@ -24,6 +25,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+//    [self.calendarHeatMap reloadData];
 }
 
 @end

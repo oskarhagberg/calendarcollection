@@ -24,6 +24,7 @@
 		75AAEEB31713583E00176CC7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEE8B1713583E00176CC7 /* Foundation.framework */; };
 		75AAEEBB1713583E00176CC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEEB91713583E00176CC7 /* InfoPlist.strings */; };
 		75AAEEBE1713583E00176CC7 /* CalendarHeatMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEEBD1713583E00176CC7 /* CalendarHeatMapTests.m */; };
+		75AAEEC91713594A00176CC7 /* OHCalendarHeatMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEEC81713594A00176CC7 /* OHCalendarHeatMapView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		75AAEEBA1713583E00176CC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75AAEEBC1713583E00176CC7 /* CalendarHeatMapTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarHeatMapTests.h; sourceTree = "<group>"; };
 		75AAEEBD1713583E00176CC7 /* CalendarHeatMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarHeatMapTests.m; sourceTree = "<group>"; };
+		75AAEEC71713594A00176CC7 /* OHCalendarHeatMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarHeatMapView.h; sourceTree = "<group>"; };
+		75AAEEC81713594A00176CC7 /* OHCalendarHeatMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHCalendarHeatMapView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,8 @@
 				75AAEEA71713583E00176CC7 /* OHViewController.h */,
 				75AAEEA81713583E00176CC7 /* OHViewController.m */,
 				75AAEE901713583E00176CC7 /* Supporting Files */,
+				75AAEEC71713594A00176CC7 /* OHCalendarHeatMapView.h */,
+				75AAEEC81713594A00176CC7 /* OHCalendarHeatMapView.m */,
 			);
 			path = CalendarHeatMap;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 				75AAEE961713583E00176CC7 /* main.m in Sources */,
 				75AAEE9A1713583E00176CC7 /* OHAppDelegate.m in Sources */,
 				75AAEEA91713583E00176CC7 /* OHViewController.m in Sources */,
+				75AAEEC91713594A00176CC7 /* OHCalendarHeatMapView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
