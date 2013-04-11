@@ -14,9 +14,12 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 @interface OHCalendarHeatMapLayout : UICollectionViewLayout
 
+@property (nonatomic) CGSize cellSize;
 @property (nonatomic, copy) NSDate* startDate;
+@property (nonatomic, copy) NSDate* startDateMidnight;
 @property (nonatomic, copy) NSDate* adjustedStartDate;
 @property (nonatomic, copy) NSDate* endDate;
+@property (nonatomic, copy) NSDate* endDateMidnight;
 @property (nonatomic, strong) NSCalendar* calendar;
 
 @property (nonatomic) CGSize contentSize;
@@ -28,21 +31,31 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 - (void)prepareLayout
 {
     
-    NSDateComponents* weekdayComponents = [self.calendar components:NSWeekdayCalendarUnit fromDate:self.startDate];
+    self.cellSize = CGSizeMake(40.0, 40.0);
+    
+    NSUInteger midnightUnits = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+    
+    NSDateComponents* startComponents = [self.calendar components:midnightUnits fromDate:self.startDate];
+    self.startDateMidnight = [self.calendar dateFromComponents:startComponents];
+    
+    NSDateComponents* endComponents = [self.calendar components:midnightUnits fromDate:self.endDate];
+    self.endDateMidnight = [self.calendar dateFromComponents:endComponents];
+    
+    NSDateComponents* weekdayComponents = [self.calendar components:NSWeekdayCalendarUnit fromDate:self.startDateMidnight];
     if (weekdayComponents.weekday == 1) {
-        self.adjustedStartDate = self.startDate;
+        self.adjustedStartDate = self.startDateMidnight;
     } else {
         NSDateComponents* adjustment = [[NSDateComponents alloc] init];
         adjustment.day = 1 - weekdayComponents.weekday;
-        self.adjustedStartDate = [self.calendar dateByAddingComponents:adjustment toDate:self.startDate options:0];
+        self.adjustedStartDate = [self.calendar dateByAddingComponents:adjustment toDate:self.startDateMidnight options:0];
     }
     
     NSDateComponents* components = [self.calendar components:NSWeekCalendarUnit
                                                     fromDate:self.adjustedStartDate
                                                       toDate:self.endDate options:0];
     NSInteger rows = components.week;
-    CGFloat height = rows * 40.0;
-    self.contentSize = CGSizeMake(self.collectionView.bounds.size.width, height);
+    CGFloat height = rows * self.cellSize.height;
+    self.contentSize = CGSizeMake(7 * self.cellSize.width, height);
 }
 
 - (NSDate*)dateForIndexPath:(NSIndexPath*)indexPath
@@ -54,14 +67,14 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     dateComponents.year = year;
     dateComponents.month = month;
     dateComponents.day = day;
-    NSDate* date = [self.calendar dateByAddingComponents:dateComponents toDate:self.startDate options:0];
+    NSDate* date = [self.calendar dateByAddingComponents:dateComponents toDate:self.startDateMidnight options:0];
     return date;
 }
 
 - (NSIndexPath*)indexPathForDate:(NSDate*)date
 {
     NSUInteger units = NSMonthCalendarUnit | NSDayCalendarUnit;
-    NSDateComponents* components = [self.calendar components:units fromDate:self.startDate toDate:date options:0];
+    NSDateComponents* components = [self.calendar components:units fromDate:self.startDateMidnight toDate:date options:0];
     return [NSIndexPath indexPathForItem:components.day inSection:components.month];
 }
 
@@ -87,61 +100,50 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    NSInteger row = rect.origin.y / 40.0;
-    NSInteger column = rect.origin.x / 40.0;
-    
-    NSInteger rows = rect.size.height / 40.0 + 1;
-    NSInteger columns = rect.size.width / 40.0 + 1;
-    columns = MIN(7, columns);
-    
-    NSDateComponents* weeks = [[NSDateComponents alloc] init];
-    weeks.week = row;
-    NSDate* rectStartDate = [self.calendar dateByAddingComponents:weeks toDate:self.startDate options:0];
-    
-    CGRect firstFrame = [self rectForDate:rectStartDate];
-    NSInteger startColumn = firstFrame.origin.x / 40.0;
     
     NSMutableArray* attributes = [NSMutableArray array];
     
-    NSDateComponents* dayOffsetComponents = [[NSDateComponents alloc] init];
-    dayOffsetComponents.day = 0;
-    CGRect frame = firstFrame;
-    for (NSInteger r = 0; r<rows; r++) {
-
-        for (NSInteger c = column; c<columns; c++) {
+    NSInteger previousRows = (NSInteger)(rect.origin.y/self.cellSize.height);
+    
+    NSDateComponents* previousWeeks = [[NSDateComponents alloc] init];
+    previousWeeks.week = previousRows;
+    
+    NSDateComponents* oneDayAfter = [[NSDateComponents alloc] init];
+    oneDayAfter.day = 1;
+    
+    NSDate* date = [self.calendar dateByAddingComponents:previousWeeks toDate:self.adjustedStartDate options:0];
+    
+    CGFloat x = 0.0;
+    CGFloat y = previousRows * self.cellSize.height;
+    
+    while (y < rect.origin.y + rect.size.height) {
+        
+        for (NSInteger column = 0; column < 7; column ++) {
             
-            if (r == 0 && c < startColumn) {
-                continue;
+            CGRect frame = CGRectMake(x, y, self.cellSize.width, self.cellSize.height);
+            //Sanity check
+            if (CGRectIntersectsRect(frame, rect) &&
+                [date timeIntervalSinceDate:self.startDateMidnight] >= 0 &&
+                [date timeIntervalSinceDate:self.endDateMidnight] < 0) {
+                
+                NSIndexPath* indexPath = [self indexPathForDate:date];
+                UICollectionViewLayoutAttributes* attr =
+                [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+                attr.frame = frame;
+                attr.zIndex = 1;
+                [attributes addObject:attr];
             }
             
-            NSDate* date = [self.calendar dateByAddingComponents:dayOffsetComponents toDate:rectStartDate options:0];
-            NSIndexPath* indexPath = [self indexPathForDate:date];
-            
-            UICollectionViewLayoutAttributes* attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-            attr.frame = frame;
-            attr.zIndex = 1;
-            
-            [attributes addObject:attr];
-            
-            //NSLog(@"Attr: [%f,%f,%f,%f] => [%d,%d]", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height, indexPath.section, indexPath.row);
-            
-            dayOffsetComponents.day++;
-            frame = CGRectOffset(frame, 40.0, 0.0);
-            
-            NSComparisonResult cr = [date compare:self.endDate];
-            if (cr == NSOrderedSame || cr == NSOrderedDescending) {
-                r = rows;
-                break;
-            }
-
+            date = [self.calendar dateByAddingComponents:oneDayAfter toDate:date options:0];
+            x += self.cellSize.width;
         }
         
-        frame = CGRectMake(0.0, frame.origin.y + 40.0, frame.size.width, frame.size.height);
-
+        x = 0;
+        y += self.cellSize.height;
+        
     }
     
     return attributes;
-    
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -360,13 +362,12 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     NSDateComponents* components = [self.calendar components:NSMonthCalendarUnit fromDate:self.startDate toDate:self.endDate options:0];
-    NSInteger sections = components.month + components.year * 12;
+    NSInteger sections = components.month;
     return sections;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
     
     NSDateComponents* months = [[NSDateComponents alloc] init];
     months.month = section;
