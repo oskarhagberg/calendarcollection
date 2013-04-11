@@ -35,7 +35,7 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 - (void)prepareLayout
 {
     
-    self.cellSize = CGSizeMake(40.0, 40.0);
+    self.cellSize = CGSizeMake(45.0, 45.0);
         
     // Store away midnight for start and end date
     NSUInteger midnightUnits = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
@@ -281,6 +281,8 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 @interface OHCalendarHeatMapMonthView : UICollectionReusableView
 
 @property (nonatomic, weak, readonly) UILabel* label;
+@property (nonatomic) BOOL observedShowValue;
+@property (nonatomic, copy) NSDate* date;
 
 @end
 
@@ -365,10 +367,22 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 }
 
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+}
+
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
+{
+    [super applyLayoutAttributes:layoutAttributes];
+    self.alpha = self.observedShowValue ? 1.0 : 0.0;
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"showMonths"] && [object isKindOfClass:[OHCalendarHeatMapView class]]) {
         OHCalendarHeatMapView* heatMap = (OHCalendarHeatMapView*)object;
+        self.observedShowValue = heatMap.showMonths;
         [UIView animateWithDuration:0.2 animations:^{
             self.alpha = heatMap.showMonths ? 1.0 : 0.0;
         }];
@@ -551,6 +565,7 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     }
     
     NSDate* date = [self.layout dateForIndexPath:indexPath];
+    month.date = date;
     NSDateComponents* components = [self.calendar components:NSMonthCalendarUnit fromDate:date];
     if (components.month % 2 == 0) {
         month.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.2];
@@ -559,7 +574,7 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     }
     NSString* s = [formatter stringFromDate:date];
     month.label.text = s;
-    [self addObserver:month forKeyPath:@"showMonths" options:NSKeyValueObservingOptionNew context:NULL];
+    [self addObserver:month forKeyPath:@"showMonths" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:NULL];
         
     return month;
     
