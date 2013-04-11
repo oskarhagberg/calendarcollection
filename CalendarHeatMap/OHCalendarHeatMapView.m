@@ -111,10 +111,10 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     
     NSLog(@"Date: %@, [%d,%d]", date, row, column);
     
-    CGFloat y = row * 40.0;
-    CGFloat x = column * 40.0;
+    CGFloat y = row * self.cellSize.height;
+    CGFloat x = column * self.cellSize.width;
     
-    return CGRectMake(x, y, 40.0, 40.0);
+    return CGRectMake(x, y, self.cellSize.width, self.cellSize.height);
 }
 
 #pragma mark - UICollectionViewLayout methods
@@ -125,6 +125,8 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     if (self.layoudOutAttributes && CGRectEqualToRect(rect, self.layedOutRect)) {
         return self.layoudOutAttributes;
     }
+    
+    NSInteger sections = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
     
     NSMutableArray* attributes = [NSMutableArray array];
     
@@ -137,28 +139,31 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     oneDayAfter.day = 1;
     
     NSDate* date = [self.calendar dateByAddingComponents:previousWeeks toDate:self.startDateWeek options:0];
-    NSDate* start = [date copy];
     
     CGFloat x = 0.0;
     CGFloat y = previousRows * self.cellSize.height;
     
-    while (y < rect.origin.y + rect.size.height) {
+    UICollectionViewLayoutAttributes* prevMonthAttr = nil;
+    
+    BOOL running = YES;
+    while (running) {
         
         for (NSInteger column = 0; column < 7; column ++) {
             
             CGRect frame = CGRectMake(x, y, self.cellSize.width, self.cellSize.height);
-            //Sanity check
-            if (CGRectIntersectsRect(frame, rect) &&
-                [date timeIntervalSinceDate:self.startDateMidnight] >= 0 &&
+            NSIndexPath* indexPath = [self indexPathForDate:date];
+
+            if ([date timeIntervalSinceDate:self.startDateMidnight] >= 0 &&
                 [date timeIntervalSinceDate:self.endDateMidnight] <= 0) {
                 
-                NSIndexPath* indexPath = [self indexPathForDate:date];
 
                 UICollectionViewLayoutAttributes* attr =
                 [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
                 attr.frame = frame;
                 attr.zIndex = 1;
-                [attributes addObject:attr];
+                if (CGRectIntersectsRect(frame, rect)) {
+                    [attributes addObject:attr];
+                }
                 
                 /* Debug
                 static NSDateFormatter* formatter;
@@ -172,13 +177,32 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
                 
                 if (indexPath.item == 0) {
-                    UICollectionViewLayoutAttributes* monthAttr =
+                    UICollectionViewLayoutAttributes* newMonthAttr =
                     [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kOHCalendarHeatMapKindMonth
                                                                                    withIndexPath:indexPath];
-                    CGRect monthFrame = CGRectMake(0.0, frame.origin.y, self.contentSize.width, 80.0);
-                    monthAttr.frame = monthFrame;
-                    monthAttr.zIndex = 2;
-                    [attributes addObject:monthAttr];
+                    CGRect monthFrame = CGRectMake(0.0, frame.origin.y, self.contentSize.width, 0);
+                    newMonthAttr.frame = monthFrame;
+                    newMonthAttr.zIndex = 2;
+                    
+                    if (prevMonthAttr) {
+                        CGRect prevFrame = prevMonthAttr.frame;
+                        prevFrame.size.height = self.cellSize.height + monthFrame.origin.y - prevFrame.origin.y;
+                        prevMonthAttr.frame = prevFrame;
+                        [attributes addObject:prevMonthAttr];
+                    }
+                    prevMonthAttr = newMonthAttr;
+
+                    if (y > rect.origin.y + rect.size.height) {
+                        running = NO;
+                    }
+                }
+            } else if (indexPath.section == sections -1) {
+                running = NO;
+                if (prevMonthAttr) {
+                    CGRect prevFrame = prevMonthAttr.frame;
+                    prevFrame.size.height = self.contentSize.height - prevFrame.origin.y;
+                    prevMonthAttr.frame = prevFrame;
+                    [attributes addObject:prevMonthAttr];
                 }
             }
             
@@ -191,11 +215,6 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
         
     }
     
-    /* Debug
-    NSLog(@"Layed out between %f and %f and created %d attributes between %@ and %@",
-          rect.origin.y, rect.origin.y + rect.size.height,
-          attributes.count, start, date);
-     */
     self.layedOutRect = rect;
     self.layoudOutAttributes = attributes;
     return attributes;
@@ -203,7 +222,6 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    abort();
     NSDate* date = [self dateForIndexPath:indexPath];
     CGRect rect = [self rectForDate:date];
     UICollectionViewLayoutAttributes* attr =
@@ -475,23 +493,19 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
         NSDateComponents* components = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
                                                         fromDate:self.endDate];
         numberOfItems = components.day + 1;
-        NSLog(@"Number of items for last month: %d", numberOfItems);
     } else {
         NSDateComponents* months = [[NSDateComponents alloc] init];
         months.month = section;
         NSDate* date = [self.calendar dateByAddingComponents:months toDate:self.startDate options:0];
-        NSLog(@"Date: %@", date);
         NSRange days = [self.calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
         if (section == 0) {
             // month of the start date
             NSDateComponents* components = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
                                                             fromDate:self.startDate];
             numberOfItems = days.length - components.day + 1;
-            NSLog(@"Number of items for first month: %d", numberOfItems);
         } else {
             // somewhere in the middle
             numberOfItems = days.length;
-            NSLog(@"Number of items for month %d: %d", section, numberOfItems);
         }
     }
     
@@ -520,6 +534,12 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     }
     
     NSDate* date = [self.layout dateForIndexPath:indexPath];
+    NSDateComponents* components = [self.calendar components:NSMonthCalendarUnit fromDate:date];
+    if (components.month % 2 == 0) {
+        month.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.2];
+    } else {
+        month.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.2];
+    }
     NSString* s = [formatter stringFromDate:date];
     month.label.text = s;
     return month;
