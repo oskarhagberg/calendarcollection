@@ -183,6 +183,7 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
                     CGRect monthFrame = CGRectMake(0.0, frame.origin.y, self.contentSize.width, 0);
                     newMonthAttr.frame = monthFrame;
                     newMonthAttr.zIndex = 2;
+                    //newMonthAttr.alpha = 0.0;
                     
                     if (prevMonthAttr) {
                         CGRect prevFrame = prevMonthAttr.frame;
@@ -260,11 +261,29 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 @end
 
+@interface OHCalendarHeatMapView () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate>
+
+@property (strong, nonatomic) UICollectionView* collectionView;
+@property (strong, nonatomic) OHCalendarHeatMapLayout* layout;
+@property (copy, nonatomic) NSDate* startDate;
+@property (copy, nonatomic) NSDate* endDate;
+@property (strong, nonatomic) NSCalendar* calendar;
+@property (nonatomic) BOOL showMonths;
+
+@end
+
 @interface OHCalendarHeatMapDayCell : UICollectionViewCell
 
 @property (nonatomic, weak, readonly) UILabel* label;
 
 @end
+
+@interface OHCalendarHeatMapMonthView : UICollectionReusableView
+
+@property (nonatomic, weak, readonly) UILabel* label;
+
+@end
+
 
 @implementation OHCalendarHeatMapDayCell
 
@@ -304,12 +323,6 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 @end
 
-@interface OHCalendarHeatMapMonthView : UICollectionReusableView
-
-@property (nonatomic, weak, readonly) UILabel* label;
-
-@end
-
 @implementation OHCalendarHeatMapMonthView
 
 @synthesize label = _label;
@@ -342,25 +355,29 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     _label = label;
     self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
     self.opaque = NO;
+    self.alpha = 0.0;
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     _label.frame = self.bounds;
+
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"showMonths"] && [object isKindOfClass:[OHCalendarHeatMapView class]]) {
+        OHCalendarHeatMapView* heatMap = (OHCalendarHeatMapView*)object;
+        [UIView animateWithDuration:0.2 animations:^{
+            self.alpha = heatMap.showMonths ? 1.0 : 0.0;
+        }];
+    }
 }
 
 @end
 
-@interface OHCalendarHeatMapView () <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (strong, nonatomic) UICollectionView* collectionView;
-@property (strong, nonatomic) OHCalendarHeatMapLayout* layout;
-@property (copy, nonatomic) NSDate* startDate;
-@property (copy, nonatomic) NSDate* endDate;
-@property (strong, nonatomic) NSCalendar* calendar;
-
-@end
 
 @implementation OHCalendarHeatMapView
 
@@ -542,6 +559,8 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
     }
     NSString* s = [formatter stringFromDate:date];
     month.label.text = s;
+    [self addObserver:month forKeyPath:@"showMonths" options:NSKeyValueObservingOptionNew context:NULL];
+        
     return month;
     
 }
@@ -557,6 +576,30 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
+{
+    [self removeObserver:view forKeyPath:@"showMonths"];
+}
+
+#pragma mark UIScrollViewDelegate implementation
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.showMonths = YES;
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        self.showMonths = NO;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    self.showMonths = NO;
 }
 
 @end
