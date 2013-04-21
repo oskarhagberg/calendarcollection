@@ -19,6 +19,7 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 @property (nonatomic, copy) NSDate* startDateMidnight;
 @property (nonatomic, copy) NSDate* startDateWeek;
 @property (nonatomic, copy) NSDate* startDateMonth;
+@property (nonatomic, copy) NSDateComponents* startDateMidnightComponents;
 @property (nonatomic, copy) NSDate* endDate;
 @property (nonatomic, copy) NSDate* endDateMidnight;
 @property (nonatomic, strong) NSCalendar* calendar;
@@ -34,13 +35,15 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 - (void)prepareLayout
 {
-    
+    NSLog(@"Preparing layout");
     self.cellSize = CGSizeMake(45.0, 45.0);
         
     // Store away midnight for start and end date
     NSUInteger midnightUnits = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     NSDateComponents* startComponents = [self.calendar components:midnightUnits fromDate:self.startDate];
     self.startDateMidnight = [self.calendar dateFromComponents:startComponents];
+    self.startDateMidnightComponents = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:self.startDateMidnight];
+    
     NSDateComponents* endComponents = [self.calendar components:midnightUnits fromDate:self.endDate];
     self.endDateMidnight = [self.calendar dateFromComponents:endComponents];
     
@@ -85,13 +88,13 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 - (NSIndexPath*)indexPathForDate:(NSDate*)date
 {
-    NSDateComponents* startComponents = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:self.startDateMidnight];
     NSDateComponents* dateComponents = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:date];
 
     NSUInteger units = NSMonthCalendarUnit | NSDayCalendarUnit;
     NSDateComponents* components;
     
-    if (startComponents.year == dateComponents.year && startComponents.month == dateComponents.month) {
+    if (self.startDateMidnightComponents.year == dateComponents.year &&
+        self.startDateMidnightComponents.month == dateComponents.month) {
         components = [self.calendar components:units fromDate:self.startDateMidnight toDate:date options:0];
     } else {
         components = [self.calendar components:units fromDate:self.startDateMonth toDate:date options:0];
@@ -121,8 +124,9 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    
+    NSLog(@"layoutAttributesForElementsInRect:[%f,%f,%f,%f]", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     if (self.layoudOutAttributes && CGRectEqualToRect(rect, self.layedOutRect)) {
+        NSLog(@"returning cached");
         return self.layoudOutAttributes;
     }
     
@@ -189,7 +193,7 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
                         CGRect prevFrame = prevMonthAttr.frame;
                         prevFrame.size.height = self.cellSize.height + monthFrame.origin.y - prevFrame.origin.y;
                         prevMonthAttr.frame = prevFrame;
-                        [attributes addObject:prevMonthAttr];
+                        //[attributes addObject:prevMonthAttr];
                     }
                     prevMonthAttr = newMonthAttr;
 
@@ -203,7 +207,7 @@ static NSString* const kOHCalendarHeatMapKindMonth = @"OHCalendarHeatMapKindMont
                     CGRect prevFrame = prevMonthAttr.frame;
                     prevFrame.size.height = self.contentSize.height - prevFrame.origin.y;
                     prevMonthAttr.frame = prevFrame;
-                    [attributes addObject:prevMonthAttr];
+                    //[attributes addObject:prevMonthAttr];
                 }
             }
             
