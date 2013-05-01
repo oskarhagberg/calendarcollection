@@ -71,5 +71,5 @@ typedef NS_OPTIONS(NSUInteger, OHCalendarViewScrollPosition) {
 - (void)registerNib:(UINib *)nib forSupplementaryViewOfKind:(NSString *)kind withReuseIdentifier:(NSString *)identifier;
 
 - (id)dequeueReusableCellWithReuseIdentifier:(NSString *)identifier forDate:(NSDate*)date;
-- (id)dequeueReusableSupplementaryViewOfKind:(NSString*)elementKind withReuseIdentifier:(NSString *)identifier forIndexDate:(NSDate*)date;
+- (id)dequeueReusableSupplementaryViewOfKind:(NSString*)elementKind withReuseIdentifier:(NSString *)identifier forDate:(NSDate*)date;
 @end

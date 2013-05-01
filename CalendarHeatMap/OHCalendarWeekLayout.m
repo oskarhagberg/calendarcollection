@@ -8,7 +8,14 @@
 
 #import "OHCalendarWeekLayout.h"
 
+NSString* const OHCalendarWeekLayoutMonthView = @"OHCalendarWeekLayoutMonthView";
+
 @implementation OHCalendarWeekLayout
+
++ (Class)layoutAttributesClass
+{
+    return [OHCalendarViewLayoutAttributes class];
+}
 
 - (void)setLeftMargin:(CGFloat)leftMargin
 {
@@ -53,47 +60,94 @@
     NSLog(@"layoutAttributesForElementsInRect:%@", NSStringFromCGRect(rect));
     
     NSMutableArray* attributes = [NSMutableArray array];
-    NSInteger sections = [self.collectionView.dataSource
-                          numberOfSectionsInCollectionView:self.collectionView];
     
+    //Find the first day of the month that begins the rect (or the start date if thats later)
     NSInteger previousRows = (NSInteger)(rect.origin.y/self.cellSize.height);
     NSDateComponents* previousWeeksComponents = [[NSDateComponents alloc] init];
     previousWeeksComponents.week = previousRows;
+    NSDate* date = [self.calendar dateByAddingComponents:previousWeeksComponents
+                                                  toDate:self.startDateWeek
+                                                 options:0];
+    date = [[self.calendar dateFromComponents:[self.calendar components:NSYearCalendarUnit|NSMonthCalendarUnit
+                                                                                  fromDate:date]]
+            laterDate:self.startDateMidnight];
+    CGRect monthStartDayRect = [self rectForDate:date];
+    
+    // Find the first day of the week of the date.
+    NSDateComponents* weekdayComponents = [self.calendar components:NSWeekdayCalendarUnit fromDate:date];
+    if (weekdayComponents.weekday != 1) {
+        NSDateComponents* adjustment = [[NSDateComponents alloc] init];
+        adjustment.day = 1 - weekdayComponents.weekday;
+        date = [self.calendar dateByAddingComponents:adjustment toDate:date options:0];
+    }
     
     NSDateComponents* oneDayAfterComponents = [[NSDateComponents alloc] init];
     oneDayAfterComponents.day = 1;
     
-    NSDate* date = [self.calendar dateByAddingComponents:previousWeeksComponents
-                                                  toDate:self.startDateWeek
-                                                 options:0];
-    
+    NSIndexPath* indexPath = nil;
+    UIBezierPath* path = nil;
     CGFloat x = self.leftMargin;
-    CGFloat y = previousRows * self.cellSize.height;
-    
-    BOOL running = YES;
-    while (running) {
+    CGFloat y = monthStartDayRect.origin.y;
+    CGPoint monthStartPoint = CGPointMake(self.leftMargin, y);
+
+    BOOL fillingRect = YES;
+    BOOL fillingMonth = YES;
+    while (fillingRect || fillingMonth) {
+        
         for (NSInteger column = 0; column < 7; column ++) {
+            
             CGRect frame = CGRectMake(x, y, self.cellSize.width, self.cellSize.height);
             
             if ([date timeIntervalSinceDate:self.startDateMidnight] >= 0 &&
                 [date timeIntervalSinceDate:self.endDateMidnight] <= 0) {
                 
-                NSIndexPath* indexPath = [self indexPathForDate:date];
-                UICollectionViewLayoutAttributes* attr =
-                [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-                attr.frame = frame;
-                attr.zIndex = 1;
+                indexPath = [self indexPathForDate:date];
+                
                 // Since we loop over more days than necessary in order to build up
                 // a complete month, we need to check if the cell is actually
                 // in the layout rect
                 if (CGRectIntersectsRect(frame, rect)) {
+                    UICollectionViewLayoutAttributes* attr =
+                    [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+                    attr.frame = frame;
+                    attr.zIndex = 1;
                     [attributes addObject:attr];
                 }
                 
-            } else {
-                if ([date timeIntervalSinceDate:self.endDateMidnight] > 0) {
-                    running = NO;
+                if (indexPath.item == 0) {
+                    
+                    if (path) {
+                        NSLog(@"Adding month for section %d {{%f, %f}, {%f, %f}}", indexPath.section -1, monthStartPoint.x, monthStartPoint.y, path.bounds.size.width, path.bounds.size.height);
+                        // Close previous month
+                        [attributes addObject:[self monthAttributesWithIndexPath:indexPath
+                                                                      beizerPath:path
+                                                                      startPoint:monthStartPoint]];
+                        if (fillingRect == NO) {
+                            NSLog(@"stopping because month is done and rect is filled");
+                            fillingMonth = NO; // This will end the loop
+                        }
+                    }
+                    
+                    // Begin a new month path
+                    monthStartPoint = CGPointMake(self.leftMargin, y);
+                    path = [[UIBezierPath alloc] init];
                 }
+                
+                // Append day cell rect to month bounds path
+                CGRect translatedFrame = CGRectMake(frame.origin.x - monthStartPoint.x, frame.origin.y - monthStartPoint.y, frame.size.width, frame.size.height);
+                [path appendPath:[UIBezierPath bezierPathWithRect:translatedFrame]];
+                NSLog(@"Appending rect for [%d, %d]: %@", indexPath.section, indexPath.item, NSStringFromCGRect(translatedFrame));
+                
+            } else if ([date timeIntervalSinceDate:self.endDateMidnight] > 0) {
+                NSLog(@"Adding month for indexPath %@ bounds %@", indexPath, NSStringFromCGRect(path.bounds));
+                NSLog(@"Stopping because past end date");
+                // Ran out of days before pixels
+                fillingRect = NO;
+                fillingMonth = NO; // This will end the lop
+                // Add the ongoing month path
+                [attributes addObject:[self monthAttributesWithIndexPath:indexPath
+                                                              beizerPath:path
+                                                              startPoint:monthStartPoint]];
             }
             
             date = [self.calendar dateByAddingComponents:oneDayAfterComponents
@@ -104,9 +158,25 @@
         
         x = self.leftMargin;
         y += self.cellSize.height;
+        
+        if (y>rect.origin.y + rect.size.height) {
+            NSLog(@"Rect is filled x: %f y: %f", x, y);
+            fillingRect = NO;
+        }
     }
     
     return attributes;
+}
+
+- (OHCalendarViewLayoutAttributes*)monthAttributesWithIndexPath:(NSIndexPath*)indexPath beizerPath:(UIBezierPath*)path startPoint:(CGPoint)point
+{
+    CGRect pathBounds = path.bounds;
+    OHCalendarViewLayoutAttributes* month =
+    [OHCalendarViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:OHCalendarWeekLayoutMonthView withIndexPath:indexPath];
+    month.zIndex = 2;
+    month.frame = CGRectMake(point.x, point.y, pathBounds.size.width, pathBounds.size.height);
+    month.boundsPath = path;
+    return month;
 }
 
 - (UICollectionViewLayoutAttributes*)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -122,15 +192,23 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Not yet implemented");
-    abort();
-    return nil;
+    UICollectionViewLayoutAttributes* attr = nil;
+    if ([OHCalendarWeekLayoutMonthView isEqualToString:kind]) {
+        NSDate* date = [self dateForIndexPath:indexPath];
+        CGRect rect = [self rectForDate:date];
+        NSArray* attributes = [self layoutAttributesForElementsInRect:rect];
+        for (UICollectionViewLayoutAttributes* a in attributes) {
+            if ([a.representedElementKind isEqualToString:OHCalendarWeekLayoutMonthView]) {
+                attr = a;
+                break;
+            }
+        }
+    }
+    return attr;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString*)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Not yet implemented");
-    abort();
     return nil;
 }
 
@@ -202,8 +280,8 @@
     NSInteger row = interval / secondsInWeek;
     NSInteger column = (interval - row * secondsInWeek) / secondsInDay;
     
-    CGFloat x = row * self.cellSize.height;
-    CGFloat y = column * self.cellSize.width;
+    CGFloat x = column * self.cellSize.height;
+    CGFloat y = row * self.cellSize.width;
     
     CGRect rect = CGRectMake(x, y, self.cellSize.width, self.cellSize.height);
     

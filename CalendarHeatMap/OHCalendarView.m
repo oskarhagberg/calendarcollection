@@ -9,6 +9,8 @@
 #import "OHCalendarView.h"
 
 static NSString* const OHCalendarViewDefaultDayCellIdentifier = @"OHCalendarViewDefaultDayCell";
+static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarViewDefaultMonthViewIdentifier";
+
 
 @interface OHCalendarViewDefaultDayCell : UICollectionViewCell
 
@@ -53,6 +55,62 @@ static NSString* const OHCalendarViewDefaultDayCellIdentifier = @"OHCalendarView
 {
     [super layoutSubviews];
     _label.frame = self.contentView.bounds;
+}
+
+@end
+
+@interface OHCalendarViewDefaultMonthView : UICollectionReusableView
+
+@property (nonatomic, copy) UIBezierPath* path;
+@property (nonatomic, copy) UIColor* fillColor;
+
+@end
+
+@implementation OHCalendarViewDefaultMonthView
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setup
+{
+    self.opaque = NO;
+}
+
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
+{
+    if ([layoutAttributes isKindOfClass:[OHCalendarViewLayoutAttributes class]]) {
+        OHCalendarViewLayoutAttributes* calendarAttributes = (OHCalendarViewLayoutAttributes*)layoutAttributes;
+        self.path = calendarAttributes.boundsPath;
+    }
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    if (!self.path) {
+        return;
+    }
+    
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(c, self.fillColor.CGColor);
+    [self.path fillWithBlendMode:kCGBlendModeNormal alpha:0.5];
+    
+    //CGContextSetStrokeColorWithColor(c, [UIColor blackColor].CGColor);
+    //[self.path stroke];
 }
 
 @end
@@ -102,7 +160,11 @@ static NSString* const OHCalendarViewDefaultDayCellIdentifier = @"OHCalendarView
     collectionView.dataSource = self;
     collectionView.delegate = self;
     
-    [collectionView registerClass:[OHCalendarViewDefaultDayCell class] forCellWithReuseIdentifier:OHCalendarViewDefaultDayCellIdentifier];
+    [collectionView registerClass:[OHCalendarViewDefaultDayCell class]
+       forCellWithReuseIdentifier:OHCalendarViewDefaultDayCellIdentifier];
+    [collectionView registerClass:[OHCalendarViewDefaultMonthView class]
+       forSupplementaryViewOfKind:OHCalendarWeekLayoutMonthView
+              withReuseIdentifier:OHCalendarViewDefaultMonthViewIdentifier];
     
     [self addSubview:collectionView];
     
@@ -210,7 +272,7 @@ static NSString* const OHCalendarViewDefaultDayCellIdentifier = @"OHCalendarView
                                                           forIndexPath:indexPath];
 }
 
-- (id)dequeueReusableSupplementaryViewOfKind:(NSString*)elementKind withReuseIdentifier:(NSString *)identifier forIndexDate:(NSDate*)date
+- (id)dequeueReusableSupplementaryViewOfKind:(NSString*)elementKind withReuseIdentifier:(NSString *)identifier forDate:(NSDate*)date
 {
     NSIndexPath* indexPath = [self.calendarLayout indexPathForDate:date];
     return [self.collectionView dequeueReusableSupplementaryViewOfKind:elementKind
@@ -305,7 +367,15 @@ static NSString* const OHCalendarViewDefaultDayCellIdentifier = @"OHCalendarView
 
 - (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    OHCalendarViewDefaultMonthView* monthView = [collectionView dequeueReusableSupplementaryViewOfKind:OHCalendarWeekLayoutMonthView
+                                                                                  withReuseIdentifier:OHCalendarViewDefaultMonthViewIdentifier
+                                                                                         forIndexPath:indexPath];
+    if (indexPath.section % 2 == 0) {
+        monthView.fillColor = [UIColor redColor];
+    } else {
+        monthView.fillColor = [UIColor greenColor];
+    }
+    return monthView;
 }
 
 #pragma mark UICollectionViewDelegate implementation

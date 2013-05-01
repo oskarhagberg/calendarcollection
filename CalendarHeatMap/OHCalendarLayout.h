@@ -24,6 +24,9 @@
 @property (nonatomic, readonly, copy) NSDate* startDateMonth;
 @property (nonatomic, readonly, copy) NSDateComponents* startDateMidnightComponents;
 @property (nonatomic, readonly, copy) NSDate* endDateMidnight;
+@property (nonatomic, readonly, copy) NSDateComponents* endDateMidnightComponents;
+
+- (NSInteger)numberOfDaysInMonth:(NSDate*)date;
 
 @end
 

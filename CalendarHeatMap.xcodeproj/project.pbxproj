@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		752BDA2717313D9B00D355B3 /* UIBezierPath+Bounding.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BDA2617313D9B00D355B3 /* UIBezierPath+Bounding.m */; };
 		758BD7321723E0FB00838DB9 /* OHCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 758BD7311723E0FB00838DB9 /* OHCalendarView.m */; };
 		758BD7351723F47B00838DB9 /* OHCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 758BD7341723F47B00838DB9 /* OHCalendarViewController.m */; };
 		758BD73817240C1300838DB9 /* OHCalendarViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 758BD73717240C1300838DB9 /* OHCalendarViewLayoutAttributes.m */; };
@@ -46,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		752BDA2517313D9B00D355B3 /* UIBezierPath+Bounding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Bounding.h"; sourceTree = "<group>"; };
+		752BDA2617313D9B00D355B3 /* UIBezierPath+Bounding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Bounding.m"; sourceTree = "<group>"; };
 		758BD7301723E0FB00838DB9 /* OHCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarView.h; sourceTree = "<group>"; };
 		758BD7311723E0FB00838DB9 /* OHCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHCalendarView.m; sourceTree = "<group>"; };
 		758BD7331723F47B00838DB9 /* OHCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarViewController.h; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 				75AAEEC81713594A00176CC7 /* OHCalendarHeatMapView.m */,
 				75A6B99A171AD4CC00462F8A /* OHTestViewController.h */,
 				75A6B99B171AD4CC00462F8A /* OHTestViewController.m */,
+				752BDA2517313D9B00D355B3 /* UIBezierPath+Bounding.h */,
+				752BDA2617313D9B00D355B3 /* UIBezierPath+Bounding.m */,
 			);
 			path = CalendarHeatMap;
 			sourceTree = "<group>";
@@ -340,6 +345,7 @@
 				758BD7321723E0FB00838DB9 /* OHCalendarView.m in Sources */,
 				758BD7351723F47B00838DB9 /* OHCalendarViewController.m in Sources */,
 				758BD73817240C1300838DB9 /* OHCalendarViewLayoutAttributes.m in Sources */,
+				752BDA2717313D9B00D355B3 /* UIBezierPath+Bounding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

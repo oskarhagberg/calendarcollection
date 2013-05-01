@@ -15,17 +15,12 @@
 @property (nonatomic, readwrite, copy) NSDate* startDateMonth;
 @property (nonatomic, readwrite, copy) NSDateComponents* startDateMidnightComponents;
 @property (nonatomic, readwrite, copy) NSDate* endDateMidnight;
+@property (nonatomic, readwrite, copy) NSDateComponents* endDateMidnightComponents;
 
 @end
 
 
 @implementation OHCalendarLayout
-
-+ (Class)layoutAttributesClass
-{
-    return [OHCalendarViewLayoutAttributes class];
-}
-
 
 - (id)init
 {
@@ -93,6 +88,7 @@
     _endDate = [endDate copy];
     if (!endDate) {
         self.endDateMidnight = nil;
+        self.endDateMidnightComponents = nil;
         [self invalidateLayout];
         return;
     }
@@ -102,6 +98,7 @@
     NSUInteger midnightUnits = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
     NSDateComponents* endComponents = [cal components:midnightUnits fromDate:_endDate];
     self.endDateMidnight = [cal dateFromComponents:endComponents];
+    self.endDateMidnightComponents = [cal components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:_endDateMidnight];
     
     [self invalidateLayout];
 }
@@ -128,6 +125,31 @@
 - (CGSize)collectionViewContentSize
 {
     return self.contentSize;
+}
+
+#pragma mark - Utility
+
+- (NSInteger)numberOfDaysInMonth:(NSDate*)date
+{
+    NSDateComponents* components = [self.calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
+    NSInteger numberOfItems = 0;
+    if (components.year == self.endDateMidnightComponents.year && components.month == self.endDateMidnightComponents.month) {
+        // Last month
+        numberOfItems = components.day + 1;
+    } else {
+        NSRange daysOfMonth = [self.calendar rangeOfUnit:NSDayCalendarUnit
+                                                  inUnit:NSMonthCalendarUnit
+                                                 forDate:date];
+        if (components.year == self.startDateMidnightComponents.year && components.month == self.startDateMidnightComponents.month) {
+            // First month
+            numberOfItems = daysOfMonth.length - components.day + 1;
+        } else {
+            // somewhere in the middle
+            numberOfItems = daysOfMonth.length;
+        }
+    }
+    
+    return numberOfItems;
 }
 
 @end
