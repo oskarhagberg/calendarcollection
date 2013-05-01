@@ -307,6 +307,11 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
                                                           forIndexPath:indexPath];
 }
 
+- (void)setCollectionViewLayout:(OHCalendarLayout*)layout animated:(BOOL)animated
+{
+    [self.collectionView setCollectionViewLayout:layout animated:animated];
+}
+
 #pragma mark - UICollectionViewDataSource implementation
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

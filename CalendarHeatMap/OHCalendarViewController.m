@@ -52,6 +52,18 @@
     [self.view addSubview:calendarView];
     self.calendarView = calendarView;
     
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+    [self.view addGestureRecognizer:tap];
+    
+}
+
+- (void)tapped
+{
+    OHCalendarDayLayout* dayLayout = [[OHCalendarDayLayout alloc] init];
+    dayLayout.leftMargin = 140.0;
+    dayLayout.rightMargin = dayLayout.leftMargin;
+    
+    [self.calendarView setCollectionViewLayout:dayLayout animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
