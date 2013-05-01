@@ -6,7 +6,14 @@
 //  Copyright (c) 2013 Oskar Hagberg. All rights reserved.
 //
 
+/*
+ Erica Sadun, http://ericasadun.com
+ iPhone Developer's Cookbook, 6.x Edition
+ BSD License, Use at your own risk
+ */
+
 #import "UIBezierPath+Bounding.h"
+#import "UIBezierPath+Points.h"
 
 #define POINT(_INDEX_) [(NSValue *)[points objectAtIndex:_INDEX_] CGPointValue]
 
@@ -19,7 +26,7 @@ static CGRect pointRect(CGPoint point)
 
 - (NSArray *) sortedPoints
 {
-    /*
+    
     NSArray *sorted = [self.points sortedArrayUsingComparator:^NSComparisonResult(id item1, id item2)
                        {
                            NSValue *v1 = (NSValue *) item1;
@@ -34,8 +41,6 @@ static CGRect pointRect(CGPoint point)
                                return [@(p1.x) compare:@(p2.x)];
                        }];
     return sorted;
-    */
-    return nil;
 }
 
 static float halfPlane(CGPoint p1, CGPoint p2, CGPoint testPoint)
@@ -83,8 +88,7 @@ static float halfPlane(CGPoint p1, CGPoint p2, CGPoint testPoint)
         for (int i = top + 1; i < output.count; i++)
             [output removeObjectAtIndex:i];
         
-        //return [UIBezierPath pathWithPoints:output];
-        return nil;
+        return [UIBezierPath pathWithPoints:output];
     }
     
     // Search for top right, max x, min y by moving
@@ -149,7 +153,6 @@ static float halfPlane(CGPoint p1, CGPoint p2, CGPoint testPoint)
     for (int i = 0; i <= top; i++)
         [results addObject:output[i]];
     
-    //return [UIBezierPath pathWithPoints:results];
-    return nil;
+    return [UIBezierPath pathWithPoints:results];
 }
 @end

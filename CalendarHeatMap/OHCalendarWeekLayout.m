@@ -85,10 +85,11 @@ NSString* const OHCalendarWeekLayoutMonthView = @"OHCalendarWeekLayoutMonthView"
     oneDayAfterComponents.day = 1;
     
     NSIndexPath* indexPath = nil;
-    UIBezierPath* path = nil;
+    NSIndexPath* monthIndexPath = nil;
     CGFloat x = self.leftMargin;
     CGFloat y = monthStartDayRect.origin.y;
-    CGPoint monthStartPoint = CGPointMake(self.leftMargin, y);
+    CGPoint monthBoundsUpperLeft = CGPointMake(self.leftMargin, y);
+    CGPoint monthUpperLeft = CGPointZero;
 
     BOOL fillingRect = YES;
     BOOL fillingMonth = YES;
@@ -116,38 +117,33 @@ NSString* const OHCalendarWeekLayoutMonthView = @"OHCalendarWeekLayoutMonthView"
                 
                 if (indexPath.item == 0) {
                     
-                    if (path) {
-                        NSLog(@"Adding month for section %d {{%f, %f}, {%f, %f}}", indexPath.section -1, monthStartPoint.x, monthStartPoint.y, path.bounds.size.width, path.bounds.size.height);
+                    if (monthIndexPath) {
                         // Close previous month
-                        [attributes addObject:[self monthAttributesWithIndexPath:indexPath
-                                                                      beizerPath:path
-                                                                      startPoint:monthStartPoint]];
+                        [attributes addObject:[self monthAttributesWithIndexPath:monthIndexPath
+                                                                      startPoint:monthBoundsUpperLeft
+                                                                  upperLeftPoint:monthUpperLeft
+                                                                 lowerRightPoint:CGPointMake(x - self.leftMargin, y + self.cellSize.height - monthBoundsUpperLeft.y)]];
                         if (fillingRect == NO) {
-                            NSLog(@"stopping because month is done and rect is filled");
                             fillingMonth = NO; // This will end the loop
                         }
                     }
                     
                     // Begin a new month path
-                    monthStartPoint = CGPointMake(self.leftMargin, y);
-                    path = [[UIBezierPath alloc] init];
+                    monthBoundsUpperLeft = CGPointMake(self.leftMargin, y);
+                    monthUpperLeft = CGPointMake(x - self.leftMargin, 0);
+                    monthIndexPath = [indexPath copy];
                 }
-                
-                // Append day cell rect to month bounds path
-                CGRect translatedFrame = CGRectMake(frame.origin.x - monthStartPoint.x, frame.origin.y - monthStartPoint.y, frame.size.width, frame.size.height);
-                [path appendPath:[UIBezierPath bezierPathWithRect:translatedFrame]];
-                NSLog(@"Appending rect for [%d, %d]: %@", indexPath.section, indexPath.item, NSStringFromCGRect(translatedFrame));
-                
+                                
             } else if ([date timeIntervalSinceDate:self.endDateMidnight] > 0) {
-                NSLog(@"Adding month for indexPath %@ bounds %@", indexPath, NSStringFromCGRect(path.bounds));
-                NSLog(@"Stopping because past end date");
                 // Ran out of days before pixels
                 fillingRect = NO;
                 fillingMonth = NO; // This will end the lop
-                // Add the ongoing month path
+                // Add the ongoing month path                
                 [attributes addObject:[self monthAttributesWithIndexPath:indexPath
-                                                              beizerPath:path
-                                                              startPoint:monthStartPoint]];
+                                                              startPoint:monthBoundsUpperLeft
+                                                          upperLeftPoint:monthUpperLeft
+                                                         lowerRightPoint:CGPointMake(x + self.cellSize.width - self.leftMargin, y + self.cellSize.height)]];
+                break; // the weekday loop
             }
             
             date = [self.calendar dateByAddingComponents:oneDayAfterComponents
@@ -160,7 +156,6 @@ NSString* const OHCalendarWeekLayoutMonthView = @"OHCalendarWeekLayoutMonthView"
         y += self.cellSize.height;
         
         if (y>rect.origin.y + rect.size.height) {
-            NSLog(@"Rect is filled x: %f y: %f", x, y);
             fillingRect = NO;
         }
     }
@@ -168,15 +163,37 @@ NSString* const OHCalendarWeekLayoutMonthView = @"OHCalendarWeekLayoutMonthView"
     return attributes;
 }
 
-- (OHCalendarViewLayoutAttributes*)monthAttributesWithIndexPath:(NSIndexPath*)indexPath beizerPath:(UIBezierPath*)path startPoint:(CGPoint)point
+- (OHCalendarViewLayoutAttributes*)monthAttributesWithIndexPath:(NSIndexPath*)indexPath startPoint:(CGPoint)startPoint
+                                                 upperLeftPoint:(CGPoint)upperLeftPoint lowerRightPoint:(CGPoint)lowerRightPoint
 {
-    CGRect pathBounds = path.bounds;
+    CGRect frame = CGRectMake(self.leftMargin, startPoint.y, self.cellSize.width * 7, lowerRightPoint.y);
+    UIBezierPath* path = [UIBezierPath bezierPath];
+    [path moveToPoint:upperLeftPoint];
+    [path addLineToPoint:CGPointMake(frame.size.width, 0)];
+    if (lowerRightPoint.x == frame.size.width) {
+        [path addLineToPoint:lowerRightPoint];
+    } else {
+        [path addLineToPoint:CGPointMake(frame.size.width, (lowerRightPoint.y - self.cellSize.height))];
+        [path addLineToPoint:CGPointMake(lowerRightPoint.x, (lowerRightPoint.y - self.cellSize.height))];
+        [path addLineToPoint:lowerRightPoint];
+    }
+    [path addLineToPoint:CGPointMake(0, lowerRightPoint.y)];
+    if (startPoint.x == 0) {
+        [path addLineToPoint:CGPointMake(0, 0)];
+    } else {
+        [path addLineToPoint:CGPointMake(0, self.cellSize.height)];
+        [path addLineToPoint:CGPointMake(upperLeftPoint.x, self.cellSize.height)];
+        [path addLineToPoint:upperLeftPoint];
+    }
+    [path closePath];
+    
     OHCalendarViewLayoutAttributes* month =
     [OHCalendarViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:OHCalendarWeekLayoutMonthView withIndexPath:indexPath];
     month.zIndex = 2;
-    month.frame = CGRectMake(point.x, point.y, pathBounds.size.width, pathBounds.size.height);
+    month.frame = frame;
     month.boundsPath = path;
     return month;
+
 }
 
 - (UICollectionViewLayoutAttributes*)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath

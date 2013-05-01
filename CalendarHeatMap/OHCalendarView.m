@@ -7,6 +7,7 @@
 //
 
 #import "OHCalendarView.h"
+#import "UIBezierPath+Bounding.h"
 
 static NSString* const OHCalendarViewDefaultDayCellIdentifier = @"OHCalendarViewDefaultDayCell";
 static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarViewDefaultMonthViewIdentifier";
@@ -63,6 +64,8 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
 
 @property (nonatomic, copy) UIBezierPath* path;
 @property (nonatomic, copy) UIColor* fillColor;
+@property (nonatomic, copy) UIColor* strokeColor;
+
 
 @end
 
@@ -89,6 +92,13 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
 - (void)setup
 {
     self.opaque = NO;
+    self.clipsToBounds = YES;
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    self.path = nil;
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
@@ -96,7 +106,20 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
     if ([layoutAttributes isKindOfClass:[OHCalendarViewLayoutAttributes class]]) {
         OHCalendarViewLayoutAttributes* calendarAttributes = (OHCalendarViewLayoutAttributes*)layoutAttributes;
         self.path = calendarAttributes.boundsPath;
+        [self setNeedsDisplay];
     }
+}
+
+- (void)setFillColor:(UIColor *)fillColor
+{
+    _fillColor = [fillColor copy];
+    [self setNeedsDisplay];
+}
+
+- (void)setStrokeColor:(UIColor *)strokeColor
+{
+    _strokeColor = [strokeColor copy];
+    [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -106,11 +129,15 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
     }
     
     CGContextRef c = UIGraphicsGetCurrentContext();
+    CGContextClearRect(c, rect);
     CGContextSetFillColorWithColor(c, self.fillColor.CGColor);
     [self.path fillWithBlendMode:kCGBlendModeNormal alpha:0.5];
     
-    //CGContextSetStrokeColorWithColor(c, [UIColor blackColor].CGColor);
-    //[self.path stroke];
+    CGContextSetLineWidth(c, 4);
+    CGContextSetStrokeColorWithColor(c, self.strokeColor.CGColor);
+    //CGContextStrokeRect(c, rect);
+    self.path.lineWidth = 2.0;
+    [self.path stroke];
 }
 
 @end
@@ -372,8 +399,10 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
                                                                                          forIndexPath:indexPath];
     if (indexPath.section % 2 == 0) {
         monthView.fillColor = [UIColor redColor];
+        monthView.strokeColor = [UIColor blueColor];
     } else {
-        monthView.fillColor = [UIColor greenColor];
+        monthView.fillColor = [UIColor clearColor];
+        monthView.strokeColor = [UIColor clearColor];
     }
     return monthView;
 }
