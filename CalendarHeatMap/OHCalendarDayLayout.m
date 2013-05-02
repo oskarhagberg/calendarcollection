@@ -29,7 +29,7 @@
     NSInteger rows = components.day;
     CGFloat height = rows * self.cellSize.height;
     
-    self.contentSize = CGSizeMake(bounds.size.width, height);
+    self.contentSize = CGSizeMake(bounds.size.width, MAX(bounds.size.height, height));
 }
 
 - (NSArray*)layoutAttributesForElementsInRect:(CGRect)rect

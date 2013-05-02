@@ -110,6 +110,7 @@
 @interface OHCalendarViewController () <OHCalendarViewDataSource, OHCalendarViewDelegate>
 
 @property (nonatomic, weak) OHCalendarView* calendarView;
+@property (nonatomic, strong) OHCalendarMonthLayout* monthLayout;
 @property (nonatomic, strong) OHCalendarWeekLayout* weekLayout;
 @property (nonatomic, strong) OHCalendarDayLayout* dayLayout;
 
@@ -131,6 +132,11 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     
+    OHCalendarMonthLayout* monthLayout = [[OHCalendarMonthLayout alloc] init];
+    monthLayout.leftMargin = 10.0;
+    monthLayout.rightMargin = monthLayout.leftMargin;
+    self.monthLayout = monthLayout;
+    
     OHCalendarWeekLayout* weekLayout = [[OHCalendarWeekLayout alloc] init];
     weekLayout.leftMargin = 80.0;
     weekLayout.rightMargin = weekLayout.leftMargin;
@@ -141,8 +147,8 @@
     dayLayout.rightMargin = dayLayout.leftMargin;
     self.dayLayout = dayLayout;
     
-    OHCalendarView* calendarView = [[OHCalendarView alloc] initWithFrame:self.view.bounds
-                                                          calendarLayout:weekLayout];
+    OHCalendarView* calendarView = [[OHCalendarView alloc] initWithFrame:self.calendarWrapperView.bounds
+                                                          calendarLayout:monthLayout];
     
     calendarView.endDate = [NSDate date];
     NSDateComponents* oneYearAgo = [[NSDateComponents alloc] init];
@@ -156,11 +162,11 @@
     calendarView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     calendarView.backgroundColor = [UIColor whiteColor];
     calendarView.showDayLabel = YES;
-    [self.view addSubview:calendarView];
+    [self.calendarWrapperView addSubview:calendarView];
     self.calendarView = calendarView;
     
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
-    [self.view addGestureRecognizer:tap];
+    [self.calendarView addGestureRecognizer:tap];
     
     [calendarView registerClass:[OHCalendarCircleDayCell class] forCellWithReuseIdentifier:@"cell"];
     
@@ -168,10 +174,14 @@
 
 - (void)tapped
 {
-    if (self.calendarView.calendarLayout == self.weekLayout) {
-        [self.calendarView setCalendarViewLayout:self.dayLayout animated:YES];
-    } else {
+    if (self.calendarView.calendarLayout == self.monthLayout) {
         [self.calendarView setCalendarViewLayout:self.weekLayout animated:YES];
+        
+    } else if (self.calendarView.calendarLayout == self.weekLayout) {
+        [self.calendarView setCalendarViewLayout:self.dayLayout animated:YES];
+        
+    } else {
+        [self.calendarView setCalendarViewLayout:self.monthLayout animated:YES];
     }
 }
 
@@ -220,5 +230,19 @@
 }
 
 #pragma mark - OHCalendarViewDelegate implementation
+
+#pragma mark - User interaction
+
+- (IBAction)showMonthLayout:(id)sender {
+    [self.calendarView setCalendarViewLayout:self.monthLayout animated:YES];
+}
+
+- (IBAction)showWeekLayout:(id)sender {
+    [self.calendarView setCalendarViewLayout:self.weekLayout animated:YES];
+}
+
+- (IBAction)showDayLayout:(id)sender {
+    [self.calendarView setCalendarViewLayout:self.dayLayout animated:YES];
+}
 
 @end

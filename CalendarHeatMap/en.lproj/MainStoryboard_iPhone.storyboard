@@ -11,8 +11,45 @@
                     <view key="view" contentMode="scaleToFill" id="mfO-DH-i4k">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3t-dh-8q6">
+                                <items>
+                                    <barButtonItem title="Month" id="mC5-tD-9pS">
+                                        <connections>
+                                            <action selector="showMonthLayout:" destination="1R6-f2-XGK" id="QQB-ZZ-Por"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Week" id="3bZ-r1-8XT">
+                                        <connections>
+                                            <action selector="showWeekLayout:" destination="1R6-f2-XGK" id="pny-Xg-XH5"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Day" id="iAK-Bu-uE8">
+                                        <connections>
+                                            <action selector="showDayLayout:" destination="1R6-f2-XGK" id="cj2-YK-IBG"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SVX-A9-Nft">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SVX-A9-Nft" firstAttribute="trailing" secondItem="mfO-DH-i4k" secondAttribute="trailing" type="default" id="8bR-sf-cUM"/>
+                            <constraint firstItem="SVX-A9-Nft" firstAttribute="bottom" secondItem="m3t-dh-8q6" secondAttribute="top" type="default" id="Gov-jD-rK5"/>
+                            <constraint firstItem="m3t-dh-8q6" firstAttribute="trailing" secondItem="mfO-DH-i4k" secondAttribute="trailing" type="default" id="dmO-bO-ytx"/>
+                            <constraint firstItem="m3t-dh-8q6" firstAttribute="bottom" secondItem="mfO-DH-i4k" secondAttribute="bottom" type="default" id="lLe-hZ-TTv"/>
+                            <constraint firstItem="m3t-dh-8q6" firstAttribute="leading" secondItem="mfO-DH-i4k" secondAttribute="leading" type="default" id="sRZ-fJ-YGI"/>
+                            <constraint firstItem="SVX-A9-Nft" firstAttribute="leading" secondItem="mfO-DH-i4k" secondAttribute="leading" type="default" id="xSi-fi-cb0"/>
+                            <constraint firstItem="SVX-A9-Nft" firstAttribute="top" secondItem="mfO-DH-i4k" secondAttribute="top" type="default" id="yyM-3f-91R"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="calendarWrapperView" destination="SVX-A9-Nft" id="oUi-W4-ccm"/>
+                        <outlet property="toolBar" destination="m3t-dh-8q6" id="g98-sp-4tq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TJu-Y4-B6b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -20,8 +57,18 @@
         </scene>
     </scenes>
     <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
         <class className="OHCalendarViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/OHCalendarViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showDayLayout:"/>
+                <relationship kind="action" name="showMonthLayout:"/>
+                <relationship kind="action" name="showWeekLayout:"/>
+                <relationship kind="outlet" name="calendarWrapperView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="toolBar" candidateClass="UIToolbar"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

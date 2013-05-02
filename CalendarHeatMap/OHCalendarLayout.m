@@ -156,8 +156,15 @@ NSString* const OHCalendarLayoutSupplementaryKindMonthView = @"OHCalendarLayoutS
 
 - (NSIndexPath*)indexPathForDate:(NSDate *)date
 {
-    NSAssert([date timeIntervalSinceDate:self.startDateMidnight] >= 0, @"date %@ eariler than start date %@", date, self.startDateMidnight);
-    NSAssert([date timeIntervalSinceDate:self.endDate] <= 0, @"date %@ after end date %@", date, self.endDate);
+    if ([date timeIntervalSinceDate:self.startDate] < 0) {
+        date = self.startDate;
+    }
+    
+    if ([self.endDate timeIntervalSinceDate:date] < 0) {
+        date = self.endDate;
+    }
+//    NSAssert([date timeIntervalSinceDate:self.startDateMidnight] >= 0, @"date %@ eariler than start date %@", date, self.startDateMidnight);
+//    NSAssert([date timeIntervalSinceDate:self.endDate] <= 0, @"date %@ after end date %@", date, self.endDate);
     
     NSDateComponents* dateComponents =
     [self.calendar components:NSYearCalendarUnit|NSMonthCalendarUnit

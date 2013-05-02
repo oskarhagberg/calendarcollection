@@ -31,7 +31,7 @@
     CGFloat height = rows * self.cellSize.height;
     
     //If content width is not bounds width, layoutAttributesForElementsInRect will be called for each pixel scroll
-    self.contentSize = CGSizeMake(self.collectionView.bounds.size.width, height);
+    self.contentSize = CGSizeMake(bounds.size.width, MAX(bounds.size.height, height));
 
     NSLog(@"Layout prepared. Rows: %d, size: %@", rows, NSStringFromCGSize(self.contentSize));
 }
