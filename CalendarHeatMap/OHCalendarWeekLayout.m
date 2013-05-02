@@ -8,26 +8,7 @@
 
 #import "OHCalendarWeekLayout.h"
 
-NSString* const OHCalendarWeekLayoutMonthView = @"OHCalendarWeekLayoutMonthView";
-
 @implementation OHCalendarWeekLayout
-
-+ (Class)layoutAttributesClass
-{
-    return [OHCalendarViewLayoutAttributes class];
-}
-
-- (void)setLeftMargin:(CGFloat)leftMargin
-{
-    _leftMargin = leftMargin;
-    [self invalidateLayout];
-}
-
-- (void)setRightMargin:(CGFloat)rightMargin
-{
-    _rightMargin = rightMargin;
-    [self invalidateLayout];
-}
 
 #pragma mark UICollectionViewLayout extension
 
@@ -188,7 +169,7 @@ NSString* const OHCalendarWeekLayoutMonthView = @"OHCalendarWeekLayoutMonthView"
     [path closePath];
     
     OHCalendarViewLayoutAttributes* month =
-    [OHCalendarViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:OHCalendarWeekLayoutMonthView withIndexPath:indexPath];
+    [OHCalendarViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:OHCalendarLayoutSupplementaryKindMonthView withIndexPath:indexPath];
     month.zIndex = 2;
     month.frame = frame;
     month.boundsPath = path;
@@ -210,12 +191,12 @@ NSString* const OHCalendarWeekLayoutMonthView = @"OHCalendarWeekLayoutMonthView"
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewLayoutAttributes* attr = nil;
-    if ([OHCalendarWeekLayoutMonthView isEqualToString:kind]) {
+    if ([OHCalendarLayoutSupplementaryKindMonthView isEqualToString:kind]) {
         NSDate* date = [self dateForIndexPath:indexPath];
         CGRect rect = [self rectForDate:date];
         NSArray* attributes = [self layoutAttributesForElementsInRect:rect];
         for (UICollectionViewLayoutAttributes* a in attributes) {
-            if ([a.representedElementKind isEqualToString:OHCalendarWeekLayoutMonthView]) {
+            if ([a.representedElementKind isEqualToString:OHCalendarLayoutSupplementaryKindMonthView]) {
                 attr = a;
                 break;
             }

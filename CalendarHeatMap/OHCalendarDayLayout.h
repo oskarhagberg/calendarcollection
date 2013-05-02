@@ -10,7 +10,4 @@
 
 @interface OHCalendarDayLayout : OHCalendarLayout
 
-@property (nonatomic) CGFloat leftMargin;
-@property (nonatomic) CGFloat rightMargin;
-
 @end

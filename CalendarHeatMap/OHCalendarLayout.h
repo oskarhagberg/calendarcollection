@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "OHCalendarViewLayoutAttributes.h"
 
+extern NSString* const OHCalendarLayoutSupplementaryKindMonthView;
+
 @interface OHCalendarLayout : UICollectionViewLayout 
 
 @property (nonatomic, copy) NSDate* startDate;
 @property (nonatomic, copy) NSDate* endDate;
 @property (nonatomic, copy) NSCalendar* calendar;
 @property (nonatomic) CGSize cellSize;
+@property (nonatomic) CGFloat leftMargin;
+@property (nonatomic) CGFloat rightMargin;
 
 
 // Internal use (should it be moved somewhere else?
@@ -25,8 +29,6 @@
 @property (nonatomic, readonly, copy) NSDateComponents* startDateMidnightComponents;
 @property (nonatomic, readonly, copy) NSDate* endDateMidnight;
 @property (nonatomic, readonly, copy) NSDateComponents* endDateMidnightComponents;
-
-- (NSInteger)numberOfDaysInMonth:(NSDate*)date;
 
 @end
 

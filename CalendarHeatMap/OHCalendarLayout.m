@@ -8,6 +8,9 @@
 
 #import "OHCalendarLayout.h"
 
+NSString* const OHCalendarLayoutSupplementaryKindMonthView = @"OHCalendarLayoutSupplementaryKindMonthView";
+
+
 @interface OHCalendarLayout ()
 
 @property (nonatomic, readwrite, copy) NSDate* startDateMidnight;
@@ -21,6 +24,11 @@
 
 
 @implementation OHCalendarLayout
+
++ (Class)layoutAttributesClass
+{
+    return [OHCalendarViewLayoutAttributes class];
+}
 
 - (id)init
 {
@@ -120,6 +128,18 @@
     [self invalidateLayout];
 }
 
+- (void)setLeftMargin:(CGFloat)leftMargin
+{
+    _leftMargin = leftMargin;
+    [self invalidateLayout];
+}
+
+- (void)setRightMargin:(CGFloat)rightMargin
+{
+    _rightMargin = rightMargin;
+    [self invalidateLayout];
+}
+
 #pragma mark - UICollectionViewLayout extension
 
 - (CGSize)collectionViewContentSize
@@ -127,29 +147,5 @@
     return self.contentSize;
 }
 
-#pragma mark - Utility
-
-- (NSInteger)numberOfDaysInMonth:(NSDate*)date
-{
-    NSDateComponents* components = [self.calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
-    NSInteger numberOfItems = 0;
-    if (components.year == self.endDateMidnightComponents.year && components.month == self.endDateMidnightComponents.month) {
-        // Last month
-        numberOfItems = components.day + 1;
-    } else {
-        NSRange daysOfMonth = [self.calendar rangeOfUnit:NSDayCalendarUnit
-                                                  inUnit:NSMonthCalendarUnit
-                                                 forDate:date];
-        if (components.year == self.startDateMidnightComponents.year && components.month == self.startDateMidnightComponents.month) {
-            // First month
-            numberOfItems = daysOfMonth.length - components.day + 1;
-        } else {
-            // somewhere in the middle
-            numberOfItems = daysOfMonth.length;
-        }
-    }
-    
-    return numberOfItems;
-}
 
 @end

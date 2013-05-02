@@ -10,18 +10,6 @@
 
 @implementation OHCalendarDayLayout
 
-- (void)setLeftMargin:(CGFloat)leftMargin
-{
-    _leftMargin = leftMargin;
-    [self invalidateLayout];
-}
-
-- (void)setRightMargin:(CGFloat)rightMargin
-{
-    _rightMargin = rightMargin;
-    [self invalidateLayout];
-}
-
 #pragma mark UICollectionViewLayout extension
 
 - (void)prepareLayout

@@ -10,9 +10,4 @@
 
 @interface OHCalendarWeekLayout : OHCalendarLayout
 
-@property (nonatomic) CGFloat leftMargin;
-@property (nonatomic) CGFloat rightMargin;
-
 @end
-
-extern NSString* const OHCalendarWeekLayoutMonthView;

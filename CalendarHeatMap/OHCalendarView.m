@@ -189,7 +189,7 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
     [collectionView registerClass:[OHCalendarViewDefaultDayCell class]
        forCellWithReuseIdentifier:OHCalendarViewDefaultDayCellIdentifier];
     [collectionView registerClass:[OHCalendarViewDefaultMonthView class]
-       forSupplementaryViewOfKind:OHCalendarWeekLayoutMonthView
+       forSupplementaryViewOfKind:OHCalendarLayoutSupplementaryKindMonthView
               withReuseIdentifier:OHCalendarViewDefaultMonthViewIdentifier];
     
     [self addSubview:collectionView];
@@ -313,6 +313,7 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
 
 #pragma mark - UICollectionViewDataSource implementation
 
+
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     // TODO: cache the number of sections when setting calendar and start/end dates
@@ -323,6 +324,7 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
     NSInteger sections = components.month + 1;
     return sections;
 }
+
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -355,6 +357,7 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
     
     return numberOfItems;
 }
+
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -398,7 +401,7 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
 
 - (UICollectionReusableView*)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    OHCalendarViewDefaultMonthView* monthView = [collectionView dequeueReusableSupplementaryViewOfKind:OHCalendarWeekLayoutMonthView
+    OHCalendarViewDefaultMonthView* monthView = [collectionView dequeueReusableSupplementaryViewOfKind:OHCalendarLayoutSupplementaryKindMonthView
                                                                                   withReuseIdentifier:OHCalendarViewDefaultMonthViewIdentifier
                                                                                          forIndexPath:indexPath];
     if (indexPath.section % 2 == 0) {
