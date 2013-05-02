@@ -9,6 +9,104 @@
 #import "OHCalendarViewController.h"
 #import "OHCalendarView.h"
 
+#define ranged_random(min, max) ((float)rand()/RAND_MAX * (max-min)+min)
+
+@interface OHCalendarCircleDayCell : UICollectionViewCell
+
+//@property (nonatomic, weak, readonly) UILabel* label;
+@property (nonatomic) CGFloat diameter; // 0.0 - 1.0
+@property (nonatomic, copy) UIColor* fillColor;
+@property (nonatomic, copy) UIColor* strokeColor;
+@property (nonatomic) BOOL circle;
+
+@end
+
+@implementation OHCalendarCircleDayCell
+
+//@synthesize label = _label;
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
+- (void)setDiameter:(CGFloat)diameter
+{
+    _diameter = diameter;
+    [self setNeedsDisplay];
+}
+
+- (void)setFillColor:(UIColor *)fillColor
+{
+    _fillColor = [fillColor copy];
+    [self setNeedsDisplay];
+}
+
+- (void)setStrokeColor:(UIColor *)strokeColor
+{
+    _strokeColor = [strokeColor copy];
+    [self setNeedsDisplay];
+}
+
+- (void)setup
+{
+    self.opaque = NO;
+    self.circle = YES;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    CGFloat edge = MIN(rect.size.width, rect.size.height);
+    CGFloat inset = (edge - self.diameter * edge) / 2.0;
+    CGRect ellipseRect = CGRectInset(rect, inset, inset);
+    
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    
+    CGContextClearRect(c, rect);
+    
+    CGContextSetFillColorWithColor(c, self.fillColor.CGColor);
+    
+    if (self.circle) {
+        CGContextFillEllipseInRect(c, ellipseRect);
+    } else {
+        CGContextFillRect(c, ellipseRect);
+    }
+    
+    CGContextSetLineWidth(c, 1);
+    CGContextSetStrokeColorWithColor(c, self.strokeColor.CGColor);
+    if (self.circle) {
+        CGContextStrokeEllipseInRect(c, ellipseRect);
+    } else {
+        CGContextStrokeRect(c, ellipseRect);
+    }
+
+}
+
+- (void)willTransitionFromLayout:(UICollectionViewLayout *)oldLayout toLayout:(UICollectionViewLayout *)newLayout
+{
+//    if ([newLayout isKindOfClass:[OHCalendarWeekLayout class]]) {
+//        self.circle = NO;
+//    } else {
+//        self.circle = YES;
+//    }
+    [self setNeedsDisplay];
+}
+
+@end
+
 @interface OHCalendarViewController () <OHCalendarViewDataSource, OHCalendarViewDelegate>
 
 @property (nonatomic, weak) OHCalendarView* calendarView;
@@ -64,6 +162,8 @@
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
     [self.view addGestureRecognizer:tap];
     
+    [calendarView registerClass:[OHCalendarCircleDayCell class] forCellWithReuseIdentifier:@"cell"];
+    
 }
 
 - (void)tapped
@@ -83,6 +183,15 @@
 
 #pragma mark - OHCalendarViewDataSource implementation
 
+- (UICollectionViewCell*)calendarView:(OHCalendarView*)calendarView cellForDate:(NSDate*)date
+{
+    OHCalendarCircleDayCell* cell = (OHCalendarCircleDayCell*)[calendarView dequeueReusableCellWithReuseIdentifier:@"cell" forDate:date];
+    cell.fillColor = [self randomHSBColor];
+    cell.strokeColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+    cell.diameter = ranged_random(0.2, 1.0);
+    return cell;
+}
+
 - (UIColor*)calendarView:(OHCalendarView*)calendarView backgroundColorForDate:(NSDate*)date
 {
     NSDateComponents* components = [calendarView.calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:date];
@@ -91,8 +200,6 @@
     }
     return [self randomHSBColor];
 }
-
-#define ranged_random(min, max) ((float)rand()/RAND_MAX * (max-min)+min)
 
 - (UIColor*)randomRGBColor
 {
