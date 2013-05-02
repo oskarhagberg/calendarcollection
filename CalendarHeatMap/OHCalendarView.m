@@ -200,6 +200,12 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
     [self reloadData];
 }
 
+- (void)setShowMonths:(BOOL)showMonths
+{
+    self.calendarLayout.showMonths = showMonths;
+    [self.calendarLayout invalidateLayout];
+}
+
 - (void)setBackgroundColor:(UIColor *)backgroundColor
 {
     [super setBackgroundColor:backgroundColor];

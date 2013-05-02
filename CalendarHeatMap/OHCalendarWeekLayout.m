@@ -100,10 +100,13 @@
                     
                     if (monthIndexPath) {
                         // Close previous month
-                        [attributes addObject:[self monthAttributesWithIndexPath:monthIndexPath
-                                                                      startPoint:monthBoundsUpperLeft
-                                                                  upperLeftPoint:monthUpperLeft
-                                                                 lowerRightPoint:CGPointMake(x - self.leftMargin, y + self.cellSize.height - monthBoundsUpperLeft.y)]];
+                        if (self.showMonths) {
+                            [attributes addObject:[self monthAttributesWithIndexPath:monthIndexPath
+                                                                          startPoint:monthBoundsUpperLeft
+                                                                      upperLeftPoint:monthUpperLeft
+                                                                     lowerRightPoint:CGPointMake(x - self.leftMargin, y + self.cellSize.height - monthBoundsUpperLeft.y)]];
+                        }
+                        
                         if (fillingRect == NO) {
                             fillingMonth = NO; // This will end the loop
                         }
@@ -119,11 +122,14 @@
                 // Ran out of days before pixels
                 fillingRect = NO;
                 fillingMonth = NO; // This will end the lop
-                // Add the ongoing month path                
-                [attributes addObject:[self monthAttributesWithIndexPath:indexPath
-                                                              startPoint:monthBoundsUpperLeft
-                                                          upperLeftPoint:monthUpperLeft
-                                                         lowerRightPoint:CGPointMake(x + self.cellSize.width - self.leftMargin, y + self.cellSize.height)]];
+                // Add the ongoing month path
+                if (self.showMonths) {
+                    [attributes addObject:[self monthAttributesWithIndexPath:indexPath
+                                                                  startPoint:monthBoundsUpperLeft
+                                                              upperLeftPoint:monthUpperLeft
+                                                             lowerRightPoint:CGPointMake(x + self.cellSize.width - self.leftMargin, y + self.cellSize.height)]];
+                }
+                
                 break; // the weekday loop
             }
             
@@ -140,7 +146,7 @@
             fillingRect = NO;
         }
     }
-    
+    NSLog(@"Created %d attributes", attributes.count);
     return attributes;
 }
 
@@ -192,6 +198,12 @@
 {
     UICollectionViewLayoutAttributes* attr = nil;
     if ([OHCalendarLayoutSupplementaryKindMonthView isEqualToString:kind]) {
+        
+        if (!self.showMonths) {
+            // early exit
+            return nil;
+        }
+        
         NSDate* date = [self dateForIndexPath:indexPath];
         CGRect rect = [self rectForDate:date];
         NSArray* attributes = [self layoutAttributesForElementsInRect:rect];

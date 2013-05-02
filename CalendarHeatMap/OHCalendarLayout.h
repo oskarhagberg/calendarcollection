@@ -19,6 +19,7 @@ extern NSString* const OHCalendarLayoutSupplementaryKindMonthView;
 @property (nonatomic) CGSize cellSize;
 @property (nonatomic) CGFloat leftMargin;
 @property (nonatomic) CGFloat rightMargin;
+@property (nonatomic) BOOL showMonths;
 
 
 // Internal use (should it be moved somewhere else?
