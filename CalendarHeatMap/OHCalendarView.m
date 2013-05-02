@@ -7,7 +7,6 @@
 //
 
 #import "OHCalendarView.h"
-#import "UIBezierPath+Bounding.h"
 
 static NSString* const OHCalendarViewDefaultDayCellIdentifier = @"OHCalendarViewDefaultDayCell";
 static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarViewDefaultMonthViewIdentifier";

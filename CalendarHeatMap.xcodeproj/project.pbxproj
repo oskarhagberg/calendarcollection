@@ -7,12 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		752BDA2717313D9B00D355B3 /* UIBezierPath+Bounding.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BDA2617313D9B00D355B3 /* UIBezierPath+Bounding.m */; };
-		752BDA2A1731502300D355B3 /* UIBezierPath+Points.m in Sources */ = {isa = PBXBuildFile; fileRef = 752BDA291731502300D355B3 /* UIBezierPath+Points.m */; };
 		758BD7321723E0FB00838DB9 /* OHCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 758BD7311723E0FB00838DB9 /* OHCalendarView.m */; };
 		758BD7351723F47B00838DB9 /* OHCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 758BD7341723F47B00838DB9 /* OHCalendarViewController.m */; };
 		758BD73817240C1300838DB9 /* OHCalendarViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 758BD73717240C1300838DB9 /* OHCalendarViewLayoutAttributes.m */; };
-		75A6B99C171AD4CC00462F8A /* OHTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A6B99B171AD4CC00462F8A /* OHTestViewController.m */; };
 		75A6B99F171ADE0500462F8A /* OHCalendarLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A6B99E171ADE0500462F8A /* OHCalendarLayout.m */; };
 		75A6B9A2171ADE1800462F8A /* OHCalendarWeekLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A6B9A1171ADE1800462F8A /* OHCalendarWeekLayout.m */; };
 		75A6B9A9171AE3CD00462F8A /* OHCalendarMonthLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A6B9A8171AE3CD00462F8A /* OHCalendarMonthLayout.m */; };
@@ -28,13 +25,11 @@
 		75AAEEA01713583E00176CC7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEE9F1713583E00176CC7 /* Default-568h@2x.png */; };
 		75AAEEA31713583E00176CC7 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEEA11713583E00176CC7 /* MainStoryboard_iPhone.storyboard */; };
 		75AAEEA61713583E00176CC7 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEEA41713583E00176CC7 /* MainStoryboard_iPad.storyboard */; };
-		75AAEEA91713583E00176CC7 /* OHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEEA81713583E00176CC7 /* OHViewController.m */; };
 		75AAEEB11713583E00176CC7 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEEB01713583E00176CC7 /* SenTestingKit.framework */; };
 		75AAEEB21713583E00176CC7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEE891713583E00176CC7 /* UIKit.framework */; };
 		75AAEEB31713583E00176CC7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AAEE8B1713583E00176CC7 /* Foundation.framework */; };
 		75AAEEBB1713583E00176CC7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75AAEEB91713583E00176CC7 /* InfoPlist.strings */; };
 		75AAEEBE1713583E00176CC7 /* CalendarHeatMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEEBD1713583E00176CC7 /* CalendarHeatMapTests.m */; };
-		75AAEEC91713594A00176CC7 /* OHCalendarHeatMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75AAEEC81713594A00176CC7 /* OHCalendarHeatMapView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,18 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		752BDA2517313D9B00D355B3 /* UIBezierPath+Bounding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Bounding.h"; sourceTree = "<group>"; };
-		752BDA2617313D9B00D355B3 /* UIBezierPath+Bounding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Bounding.m"; sourceTree = "<group>"; };
-		752BDA281731502200D355B3 /* UIBezierPath+Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Points.h"; sourceTree = "<group>"; };
-		752BDA291731502300D355B3 /* UIBezierPath+Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Points.m"; sourceTree = "<group>"; };
 		758BD7301723E0FB00838DB9 /* OHCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarView.h; sourceTree = "<group>"; };
 		758BD7311723E0FB00838DB9 /* OHCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHCalendarView.m; sourceTree = "<group>"; };
 		758BD7331723F47B00838DB9 /* OHCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarViewController.h; sourceTree = "<group>"; };
 		758BD7341723F47B00838DB9 /* OHCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHCalendarViewController.m; sourceTree = "<group>"; };
 		758BD73617240C1300838DB9 /* OHCalendarViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarViewLayoutAttributes.h; sourceTree = "<group>"; };
 		758BD73717240C1300838DB9 /* OHCalendarViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHCalendarViewLayoutAttributes.m; sourceTree = "<group>"; };
-		75A6B99A171AD4CC00462F8A /* OHTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHTestViewController.h; sourceTree = "<group>"; };
-		75A6B99B171AD4CC00462F8A /* OHTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHTestViewController.m; sourceTree = "<group>"; };
 		75A6B99D171ADE0500462F8A /* OHCalendarLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarLayout.h; sourceTree = "<group>"; };
 		75A6B99E171ADE0500462F8A /* OHCalendarLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHCalendarLayout.m; sourceTree = "<group>"; };
 		75A6B9A0171ADE1800462F8A /* OHCalendarWeekLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarWeekLayout.h; sourceTree = "<group>"; };
@@ -83,16 +72,12 @@
 		75AAEE9F1713583E00176CC7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		75AAEEA21713583E00176CC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		75AAEEA51713583E00176CC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		75AAEEA71713583E00176CC7 /* OHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OHViewController.h; sourceTree = "<group>"; };
-		75AAEEA81713583E00176CC7 /* OHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OHViewController.m; sourceTree = "<group>"; };
 		75AAEEAF1713583E00176CC7 /* CalendarHeatMapTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalendarHeatMapTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75AAEEB01713583E00176CC7 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		75AAEEB81713583E00176CC7 /* CalendarHeatMapTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CalendarHeatMapTests-Info.plist"; sourceTree = "<group>"; };
 		75AAEEBA1713583E00176CC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75AAEEBC1713583E00176CC7 /* CalendarHeatMapTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarHeatMapTests.h; sourceTree = "<group>"; };
 		75AAEEBD1713583E00176CC7 /* CalendarHeatMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarHeatMapTests.m; sourceTree = "<group>"; };
-		75AAEEC71713594A00176CC7 /* OHCalendarHeatMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OHCalendarHeatMapView.h; sourceTree = "<group>"; };
-		75AAEEC81713594A00176CC7 /* OHCalendarHeatMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OHCalendarHeatMapView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,26 +154,16 @@
 		75AAEE8F1713583E00176CC7 /* CalendarHeatMap */ = {
 			isa = PBXGroup;
 			children = (
-				758BD7331723F47B00838DB9 /* OHCalendarViewController.h */,
-				758BD7341723F47B00838DB9 /* OHCalendarViewController.m */,
 				758BD7301723E0FB00838DB9 /* OHCalendarView.h */,
 				758BD7311723E0FB00838DB9 /* OHCalendarView.m */,
 				75A6B9A3171ADE2100462F8A /* Layouts */,
 				75AAEE981713583E00176CC7 /* OHAppDelegate.h */,
 				75AAEE991713583E00176CC7 /* OHAppDelegate.m */,
+				758BD7331723F47B00838DB9 /* OHCalendarViewController.h */,
+				758BD7341723F47B00838DB9 /* OHCalendarViewController.m */,
 				75AAEEA11713583E00176CC7 /* MainStoryboard_iPhone.storyboard */,
 				75AAEEA41713583E00176CC7 /* MainStoryboard_iPad.storyboard */,
-				75AAEEA71713583E00176CC7 /* OHViewController.h */,
-				75AAEEA81713583E00176CC7 /* OHViewController.m */,
 				75AAEE901713583E00176CC7 /* Supporting Files */,
-				75AAEEC71713594A00176CC7 /* OHCalendarHeatMapView.h */,
-				75AAEEC81713594A00176CC7 /* OHCalendarHeatMapView.m */,
-				75A6B99A171AD4CC00462F8A /* OHTestViewController.h */,
-				75A6B99B171AD4CC00462F8A /* OHTestViewController.m */,
-				752BDA2517313D9B00D355B3 /* UIBezierPath+Bounding.h */,
-				752BDA2617313D9B00D355B3 /* UIBezierPath+Bounding.m */,
-				752BDA281731502200D355B3 /* UIBezierPath+Points.h */,
-				752BDA291731502300D355B3 /* UIBezierPath+Points.m */,
 			);
 			path = CalendarHeatMap;
 			sourceTree = "<group>";
@@ -340,9 +315,6 @@
 			files = (
 				75AAEE961713583E00176CC7 /* main.m in Sources */,
 				75AAEE9A1713583E00176CC7 /* OHAppDelegate.m in Sources */,
-				75AAEEA91713583E00176CC7 /* OHViewController.m in Sources */,
-				75AAEEC91713594A00176CC7 /* OHCalendarHeatMapView.m in Sources */,
-				75A6B99C171AD4CC00462F8A /* OHTestViewController.m in Sources */,
 				75A6B99F171ADE0500462F8A /* OHCalendarLayout.m in Sources */,
 				75A6B9A2171ADE1800462F8A /* OHCalendarWeekLayout.m in Sources */,
 				75A6B9A9171AE3CD00462F8A /* OHCalendarMonthLayout.m in Sources */,
@@ -350,8 +322,6 @@
 				758BD7321723E0FB00838DB9 /* OHCalendarView.m in Sources */,
 				758BD7351723F47B00838DB9 /* OHCalendarViewController.m in Sources */,
 				758BD73817240C1300838DB9 /* OHCalendarViewLayoutAttributes.m in Sources */,
-				752BDA2717313D9B00D355B3 /* UIBezierPath+Bounding.m in Sources */,
-				752BDA2A1731502300D355B3 /* UIBezierPath+Points.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
