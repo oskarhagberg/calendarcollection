@@ -44,17 +44,12 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
 {
     self.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
     UILabel* label = [[UILabel alloc] initWithFrame:self.bounds];
+    label.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     label.backgroundColor = [UIColor clearColor];
     label.opaque = NO;
     label.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:label];
     _label = label;
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    _label.frame = self.contentView.bounds;
 }
 
 @end
@@ -306,8 +301,13 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
                                                           forIndexPath:indexPath];
 }
 
-- (void)setCollectionViewLayout:(OHCalendarLayout*)layout animated:(BOOL)animated
+- (void)setCalendarViewLayout:(OHCalendarLayout*)layout animated:(BOOL)animated
 {
+    //TODO: clear out who is responsible for owing the time span. this view or the layout
+    layout.startDate = self.startDate;
+    layout.endDate = self.endDate;
+    layout.calendar = self.calendar;    
+    self.calendarLayout = layout;
     [self.collectionView setCollectionViewLayout:layout animated:animated];
 }
 

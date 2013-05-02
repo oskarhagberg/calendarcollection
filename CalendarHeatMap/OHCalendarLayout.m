@@ -140,6 +140,51 @@ NSString* const OHCalendarLayoutSupplementaryKindMonthView = @"OHCalendarLayoutS
     [self invalidateLayout];
 }
 
+- (NSDate*)dateForIndexPath:(NSIndexPath*)indexPath
+{
+    NSDateComponents* dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.month = indexPath.section;
+    dateComponents.day = indexPath.item;
+    // In the first section the start date != first day of month
+    NSDate* startDate = indexPath.section == 0 ?
+    self.startDateMidnight : self.startDateMonth;
+    NSDate* date = [self.calendar dateByAddingComponents:dateComponents
+                                                  toDate:startDate
+                                                 options:0];
+    return date;
+}
+
+- (NSIndexPath*)indexPathForDate:(NSDate *)date
+{
+    NSAssert([date timeIntervalSinceDate:self.startDateMidnight] >= 0, @"date %@ eariler than start date %@", date, self.startDateMidnight);
+    NSAssert([date timeIntervalSinceDate:self.endDate] <= 0, @"date %@ after end date %@", date, self.endDate);
+    
+    NSDateComponents* dateComponents =
+    [self.calendar components:NSYearCalendarUnit|NSMonthCalendarUnit
+                     fromDate:date];
+    
+    NSUInteger units = NSMonthCalendarUnit|NSDayCalendarUnit;
+    NSDateComponents* components;
+    
+    // In the first section the start date != first day of month
+    if(self.startDateMidnightComponents.year == dateComponents.year &&
+       self.startDateMidnightComponents.month == dateComponents.month) {
+        components = [self.calendar components:units
+                                      fromDate:self.startDateMidnight
+                                        toDate:date
+                                       options:0];
+    } else {
+        components = [self.calendar components:units
+                                      fromDate:self.startDateMonth
+                                        toDate:date
+                                       options:0];
+    }
+    
+    NSInteger section = components.month;
+    NSInteger item = components.day;
+    return [NSIndexPath indexPathForItem:item inSection:section];
+}
+
 #pragma mark - UICollectionViewLayout extension
 
 - (CGSize)collectionViewContentSize

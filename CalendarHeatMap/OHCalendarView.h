@@ -74,5 +74,5 @@ typedef NS_OPTIONS(NSUInteger, OHCalendarViewScrollPosition) {
 - (id)dequeueReusableSupplementaryViewOfKind:(NSString*)elementKind withReuseIdentifier:(NSString *)identifier forDate:(NSDate*)date;
 
 
-- (void)setCollectionViewLayout:(OHCalendarLayout*)layout animated:(BOOL)animated;
+- (void)setCalendarViewLayout:(OHCalendarLayout*)layout animated:(BOOL)animated;
 @end

@@ -30,11 +30,13 @@ extern NSString* const OHCalendarLayoutSupplementaryKindMonthView;
 @property (nonatomic, readonly, copy) NSDate* endDateMidnight;
 @property (nonatomic, readonly, copy) NSDateComponents* endDateMidnightComponents;
 
+- (NSDate*)dateForIndexPath:(NSIndexPath*)indexPath;
+- (NSIndexPath*)indexPathForDate:(NSDate*)date;
+
 @end
 
 @interface OHCalendarLayout (SubclassingHooks)
 
-- (NSDate*)dateForIndexPath:(NSIndexPath*)indexPath;
-- (NSIndexPath*)indexPathForDate:(NSDate*)date;
+- (CGRect)rectForDate:(NSDate*)date;
 
 @end

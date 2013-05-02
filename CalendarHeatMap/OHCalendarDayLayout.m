@@ -73,13 +73,13 @@
 
 - (UICollectionViewLayoutAttributes*)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSDate* date = [self dateForIndexPath:indexPath];
-//    CGRect rect = [self rectForDate:date];
-//    UICollectionViewLayoutAttributes* attr =
-//    [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-//    attr.frame = rect;
-//    attr.zIndex = 1;
-//    return attr;
+    NSDate* date = [self dateForIndexPath:indexPath];
+    CGRect rect = [self rectForDate:date];
+    UICollectionViewLayoutAttributes* attr =
+    [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+    attr.frame = rect;
+    attr.zIndex = 1;
+    return attr;
     return nil;
 }
 
@@ -105,49 +105,22 @@
 
 #pragma mark - OHCalenderLayout subclassing
 
-- (NSDate*)dateForIndexPath:(NSIndexPath*)indexPath
+- (CGRect)rectForDate:(NSDate*)date
 {
-    NSDateComponents* dateComponents = [[NSDateComponents alloc] init];
-    dateComponents.month = indexPath.section;
-    dateComponents.day = indexPath.item;
-    // In the first section the start date != first day of month
-    NSDate* startDate = indexPath.section == 0 ?
-    self.startDateMidnight : self.startDateMonth;
-    NSDate* date = [self.calendar dateByAddingComponents:dateComponents
-                                                  toDate:startDate
-                                                 options:0];
-    return date;
-}
-
-- (NSIndexPath*)indexPathForDate:(NSDate *)date
-{
-    NSAssert([date timeIntervalSinceDate:self.startDateMidnight] >= 0, @"date %@ eariler than start date %@", date, self.startDateMidnight);
-    NSAssert([date timeIntervalSinceDate:self.endDate] <= 0, @"date %@ after end date %@", date, self.endDate);
+    static const NSTimeInterval secondsInDay = 60.0 * 60.0 * 24.0;
     
-    NSDateComponents* dateComponents =
-    [self.calendar components:NSYearCalendarUnit|NSMonthCalendarUnit
-                     fromDate:date];
+    NSTimeInterval interval = [date timeIntervalSinceDate:self.startDateMidnight];
+    NSInteger row = interval / secondsInDay;
     
-    NSUInteger units = NSMonthCalendarUnit|NSDayCalendarUnit;
-    NSDateComponents* components;
+    CGFloat x = self.leftMargin;
+    CGFloat y = row * self.cellSize.height;
     
-    // In the first section the start date != first day of month
-    if(self.startDateMidnightComponents.year == dateComponents.year &&
-       self.startDateMidnightComponents.month == dateComponents.month) {
-        components = [self.calendar components:units
-                                      fromDate:self.startDateMidnight
-                                        toDate:date
-                                       options:0];
-    } else {
-        components = [self.calendar components:units
-                                      fromDate:self.startDateMonth
-                                        toDate:date
-                                       options:0];
-    }
+    CGRect rect = CGRectMake(x, y, self.cellSize.width, self.cellSize.height);
     
-    NSInteger section = components.month;
-    NSInteger item = components.day;
-    return [NSIndexPath indexPathForItem:item inSection:section];
+//    NSLog(@"rectForDate:%@ = %@ (row=%d)",
+//          date, NSStringFromCGRect(rect), row);
+    
+    return rect;
 }
 
 @end

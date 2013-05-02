@@ -12,6 +12,8 @@
 @interface OHCalendarViewController () <OHCalendarViewDataSource, OHCalendarViewDelegate>
 
 @property (nonatomic, weak) OHCalendarView* calendarView;
+@property (nonatomic, strong) OHCalendarWeekLayout* weekLayout;
+@property (nonatomic, strong) OHCalendarDayLayout* dayLayout;
 
 @end
 
@@ -34,9 +36,16 @@
     OHCalendarWeekLayout* weekLayout = [[OHCalendarWeekLayout alloc] init];
     weekLayout.leftMargin = 80.0;
     weekLayout.rightMargin = weekLayout.leftMargin;
+    self.weekLayout = weekLayout;
+    
+    OHCalendarDayLayout* dayLayout = [[OHCalendarDayLayout alloc] init];
+    dayLayout.leftMargin = 149.0;
+    dayLayout.rightMargin = dayLayout.leftMargin;
+    self.dayLayout = dayLayout;
     
     OHCalendarView* calendarView = [[OHCalendarView alloc] initWithFrame:self.view.bounds
                                                           calendarLayout:weekLayout];
+    
     calendarView.endDate = [NSDate date];
     NSDateComponents* oneYearAgo = [[NSDateComponents alloc] init];
     oneYearAgo.year = -1;
@@ -59,11 +68,11 @@
 
 - (void)tapped
 {
-    OHCalendarDayLayout* dayLayout = [[OHCalendarDayLayout alloc] init];
-    dayLayout.leftMargin = 140.0;
-    dayLayout.rightMargin = dayLayout.leftMargin;
-    
-    [self.calendarView setCollectionViewLayout:dayLayout animated:YES];
+    if (self.calendarView.calendarLayout == self.weekLayout) {
+        [self.calendarView setCalendarViewLayout:self.dayLayout animated:YES];
+    } else {
+        [self.calendarView setCalendarViewLayout:self.weekLayout animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
