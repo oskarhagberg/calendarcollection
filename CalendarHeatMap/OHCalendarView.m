@@ -438,18 +438,6 @@ static NSString* const OHCalendarViewDefaultMonthViewIdentifier = @"OHCalendarVi
     }
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if ([self.delegate respondsToSelector:@selector(scrollViewWillBeginDragging:)]) {
-        [self.delegate scrollViewWillBeginDragging:scrollView];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if ([self.delegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)]) {
-        [self.delegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
-    }
-}
-
 #pragma mark UIScrollViewDelegate implementation
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
