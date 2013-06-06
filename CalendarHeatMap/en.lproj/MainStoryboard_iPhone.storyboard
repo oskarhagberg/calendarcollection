@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="W3c-7I-aOj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="1R6-f2-XGK">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -12,15 +12,15 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="hsi-8p-jE8">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="2" id="hsi-8p-jE8">
                             <size key="itemSize" width="22" height="22"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="80" minY="0.0" maxX="80" maxY="0.0"/>
+                            <inset key="sectionInset" minX="60" minY="0.0" maxX="60" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Vp1-wi-EpK">
-                                <rect key="frame" x="80" y="0.0" width="22" height="22"/>
+                                <rect key="frame" x="60" y="0.0" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="22" height="22"/>
@@ -73,13 +73,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SVX-A9-Nft" firstAttribute="trailing" secondItem="mfO-DH-i4k" secondAttribute="trailing" type="default" id="8bR-sf-cUM"/>
-                            <constraint firstItem="SVX-A9-Nft" firstAttribute="bottom" secondItem="m3t-dh-8q6" secondAttribute="top" type="default" id="Gov-jD-rK5"/>
-                            <constraint firstItem="m3t-dh-8q6" firstAttribute="trailing" secondItem="mfO-DH-i4k" secondAttribute="trailing" type="default" id="dmO-bO-ytx"/>
-                            <constraint firstItem="m3t-dh-8q6" firstAttribute="bottom" secondItem="mfO-DH-i4k" secondAttribute="bottom" type="default" id="lLe-hZ-TTv"/>
-                            <constraint firstItem="m3t-dh-8q6" firstAttribute="leading" secondItem="mfO-DH-i4k" secondAttribute="leading" type="default" id="sRZ-fJ-YGI"/>
-                            <constraint firstItem="SVX-A9-Nft" firstAttribute="leading" secondItem="mfO-DH-i4k" secondAttribute="leading" type="default" id="xSi-fi-cb0"/>
-                            <constraint firstItem="SVX-A9-Nft" firstAttribute="top" secondItem="mfO-DH-i4k" secondAttribute="top" type="default" id="yyM-3f-91R"/>
+                            <constraint firstItem="SVX-A9-Nft" firstAttribute="trailing" secondItem="mfO-DH-i4k" secondAttribute="trailing" type="default" id="3MI-vQ-9ff"/>
+                            <constraint firstItem="m3t-dh-8q6" firstAttribute="leading" secondItem="mfO-DH-i4k" secondAttribute="leading" type="default" id="9jh-ta-TZ6"/>
+                            <constraint firstItem="m3t-dh-8q6" firstAttribute="trailing" secondItem="mfO-DH-i4k" secondAttribute="trailing" type="default" id="AmE-Le-gE2"/>
+                            <constraint firstItem="m3t-dh-8q6" firstAttribute="top" secondItem="SVX-A9-Nft" secondAttribute="bottom" type="default" id="XCy-DI-dv6"/>
+                            <constraint firstItem="m3t-dh-8q6" firstAttribute="bottom" secondItem="mfO-DH-i4k" secondAttribute="bottom" type="default" id="ic4-Of-t36"/>
+                            <constraint firstItem="SVX-A9-Nft" firstAttribute="top" secondItem="mfO-DH-i4k" secondAttribute="top" type="default" id="ji1-je-Fzl"/>
+                            <constraint firstItem="SVX-A9-Nft" firstAttribute="leading" secondItem="mfO-DH-i4k" secondAttribute="leading" type="default" id="u37-JC-ooT"/>
                         </constraints>
                     </view>
                     <connections>
@@ -120,6 +120,9 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

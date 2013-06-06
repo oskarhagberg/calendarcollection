@@ -35,7 +35,7 @@ typedef NS_OPTIONS(NSUInteger, OHCalendarViewScrollPosition) {
 
 @end
 
-@protocol OHCalendarViewDelegate <NSObject>
+@protocol OHCalendarViewDelegate <UIScrollViewDelegate>
 
 @optional
 - (void)calendarView:(OHCalendarView*)calendarView didSelectItemAtDate:(NSDate*)date;
